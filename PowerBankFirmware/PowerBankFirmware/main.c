@@ -2,7 +2,7 @@
  * PowerBankFirmware.c
  *
  * Created: 14/08/2020 1:42:05 PM
- * Author : Brendon
+ * Author : Brendon is an absolute monkey
  */ 
 
 #define  F_CPU 8000000UL
