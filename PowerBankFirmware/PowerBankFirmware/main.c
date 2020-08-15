@@ -2,7 +2,7 @@
  * PowerBankFirmware.c
  *
  * Created: 14/08/2020 1:42:05 PM
- * Author : Brendon and Jardin
+ * Author : Brendon, Jardin and a guy named Alvin that does fuck all (ABJ ltd)
  */ 
 
 #define  F_CPU 8000000UL
