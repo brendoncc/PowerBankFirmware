@@ -2,7 +2,11 @@
  * PowerBankFirmware.c
  *
  * Created: 14/08/2020 1:42:05 PM
+<<<<<<< Updated upstream
  * Author : Brendon is an absolute monkey
+=======
+ * Author : Brendon is an absolute monkey - Thats rude be nice to Matt's son and Alex's father
+>>>>>>> Stashed changes
  */ 
 
 #define  F_CPU 8000000UL
