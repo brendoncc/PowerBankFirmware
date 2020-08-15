@@ -132,7 +132,7 @@ void setup(void)
 	TCCR0B = 0x04;			//prescaler 256, 256us
   82:	84 e0       	ldi	r24, 0x04	; 4
   84:	83 bf       	out	0x33, r24	; 51
-	OCR0A = (31250 / 1000);			//interrupt every 1ms (125us * 31250 / 1000 = 1ms)
+	OCR0A = (31250 / 1000);			//interrupt every 1ms
   86:	8f e1       	ldi	r24, 0x1F	; 31
   88:	86 bf       	out	0x36, r24	; 54
 	TCCR1A = 0x00;			//16 bit timer in CTC mode
@@ -140,7 +140,7 @@ void setup(void)
 	TCCR1B = 0x0C;			//prescaler 256, 256us.
   8c:	8c e0       	ldi	r24, 0x0C	; 12
   8e:	8e bd       	out	0x2e, r24	; 46
-	OCR1A = (31250);			//interrupt every 1s (125us * 31250 = 1s)
+	OCR1A = (31250);			//interrupt every 1s (8000000/256/31250 = 1)
   90:	82 e1       	ldi	r24, 0x12	; 18
   92:	9a e7       	ldi	r25, 0x7A	; 122
   94:	9b bd       	out	0x2b, r25	; 43

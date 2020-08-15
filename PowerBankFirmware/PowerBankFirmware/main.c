@@ -2,7 +2,7 @@
  * PowerBankFirmware.c
  *
  * Created: 14/08/2020 1:42:05 PM
- * Author : Brendon is an absolute monkey - Thats rude, be nice to Matt's son and Alex's dad 
+ * Author : Brendon and Jardin
  */ 
 
 #define  F_CPU 8000000UL
