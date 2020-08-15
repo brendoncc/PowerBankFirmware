@@ -5,7 +5,7 @@
 <<<<<<< Updated upstream
  * Author : Brendon is an absolute monkey
 =======
- * Author : Brendon is an absolute monkey - Thats rude, be nice to Matt's son and Alex's father
+ * Author : Brendon is an absolute monkey - Thats rude be nice to Matt's son and Alex's father
 >>>>>>> Stashed changes
  */ 
 
