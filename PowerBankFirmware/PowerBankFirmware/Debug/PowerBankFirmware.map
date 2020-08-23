@@ -7,9 +7,9 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
- .text          0x00000000        0x0 main.o
- .data          0x00000000        0x0 main.o
- .bss           0x00000000        0x0 main.o
+ .text          0x00000000        0x0 PowerBankFirmware.o
+ .data          0x00000000        0x0 PowerBankFirmware.o
+ .bss           0x00000000        0x0 PowerBankFirmware.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
@@ -42,7 +42,7 @@ user_signatures  0x00850000         0x00000400         rw !x
 Linker script and memory map
 
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
-LOAD main.o
+LOAD PowerBankFirmware.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr25/tiny-stack\libm.a
 END GROUP
@@ -150,7 +150,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000       0xa8
+.text           0x00000000       0xa6
  *(.vectors)
  .vectors       0x00000000       0x2a C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
                 0x00000000                __vector_default
@@ -227,20 +227,20 @@ END GROUP
                 0x00000038                . = ALIGN (0x2)
  *(.text.*)
  .text.__vector_13
-                0x00000038       0x14 main.o
+                0x00000038       0x14 PowerBankFirmware.o
                 0x00000038                __vector_13
  .text.__vector_4
-                0x0000004c       0x24 main.o
+                0x0000004c       0x24 PowerBankFirmware.o
                 0x0000004c                __vector_4
- .text.setup    0x00000070       0x30 main.o
+ .text.setup    0x00000070       0x2e PowerBankFirmware.o
                 0x00000070                setup
- .text.main     0x000000a0        0x4 main.o
-                0x000000a0                main
-                0x000000a4                . = ALIGN (0x2)
+ .text.main     0x0000009e        0x4 PowerBankFirmware.o
+                0x0000009e                main
+                0x000000a2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000a4        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
-                0x000000a4                _exit
-                0x000000a4                exit
+ .fini9         0x000000a2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
+                0x000000a2                _exit
+                0x000000a2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -259,11 +259,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000a4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
+ .fini0         0x000000a2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr25/tiny-stack\libgcc.a(_exit.o)
  *(.fini0)
-                0x000000a8                _etext = .
+                0x000000a6                _etext = .
 
-.data           0x00800060        0x0 load address 0x000000a8
+.data           0x00800060        0x0 load address 0x000000a6
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -280,8 +280,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x000000a8                __data_load_start = LOADADDR (.data)
-                0x000000a8                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000000a6                __data_load_start = LOADADDR (.data)
+                0x000000a6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800060        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -329,7 +329,7 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 main.o
+ .comment       0x00000000       0x30 PowerBankFirmware.o
                                  0x31 (size before relaxing)
 
 .note.gnu.avr.deviceinfo
@@ -355,7 +355,7 @@ END GROUP
 .debug_aranges  0x00000000       0x38
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x38 main.o
+                0x00000000       0x38 PowerBankFirmware.o
 
 .debug_pubnames
  *(.debug_pubnames)
@@ -363,31 +363,31 @@ END GROUP
 .debug_info     0x00000000      0x534
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x456 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
- .debug_info    0x00000456       0xde main.o
+ .debug_info    0x00000456       0xde PowerBankFirmware.o
 
 .debug_abbrev   0x00000000      0x4a9
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x41b C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
- .debug_abbrev  0x0000041b       0x8e main.o
+ .debug_abbrev  0x0000041b       0x8e PowerBankFirmware.o
 
-.debug_line     0x00000000      0x24d
+.debug_line     0x00000000      0x25a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x10c C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
- .debug_line    0x0000010c      0x141 main.o
+ .debug_line    0x0000010c      0x14e PowerBankFirmware.o
 
 .debug_frame    0x00000000       0x74
  *(.debug_frame)
- .debug_frame   0x00000000       0x74 main.o
+ .debug_frame   0x00000000       0x74 PowerBankFirmware.o
 
-.debug_str      0x00000000      0x2fb
+.debug_str      0x00000000      0x308
  *(.debug_str)
  .debug_str     0x00000000      0x17b C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATtiny_DFP/1.1.102/gcc/dev/attiny2313a/avr25/tiny-stack/crtattiny2313a.o
- .debug_str     0x0000017b      0x180 main.o
-                                0x1b4 (size before relaxing)
+ .debug_str     0x0000017b      0x18d PowerBankFirmware.o
+                                0x1c1 (size before relaxing)
 
 .debug_loc      0x00000000       0x78
  *(.debug_loc)
- .debug_loc     0x00000000       0x78 main.o
+ .debug_loc     0x00000000       0x78 PowerBankFirmware.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -409,7 +409,7 @@ END GROUP
 
 .debug_ranges   0x00000000       0x28
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x28 main.o
+ .debug_ranges  0x00000000       0x28 PowerBankFirmware.o
 
 .debug_macro
  *(.debug_macro)
