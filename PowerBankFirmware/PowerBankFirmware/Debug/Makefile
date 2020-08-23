@@ -37,7 +37,8 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../PowerBankFirmware.c
+../PowerBankFirmware.c \
+../USI_TWI_Master.c
 
 
 PREPROCESSING_SRCS += 
@@ -47,16 +48,20 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-PowerBankFirmware.o
+PowerBankFirmware.o \
+USI_TWI_Master.o
 
 OBJS_AS_ARGS +=  \
-PowerBankFirmware.o
+PowerBankFirmware.o \
+USI_TWI_Master.o
 
 C_DEPS +=  \
-PowerBankFirmware.d
+PowerBankFirmware.d \
+USI_TWI_Master.d
 
 C_DEPS_AS_ARGS +=  \
-PowerBankFirmware.d
+PowerBankFirmware.d \
+USI_TWI_Master.d
 
 OUTPUT_FILE_PATH +=PowerBankFirmware.elf
 
@@ -72,6 +77,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

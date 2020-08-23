@@ -6,6 +6,7 @@
 */
 
 #include "PowerBankHeader.h"
+#include "USI_TWI_Master.h"
 
 int main(void)
 {

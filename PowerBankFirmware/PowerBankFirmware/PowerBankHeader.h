@@ -13,6 +13,7 @@
 #include <avr/interrupt.h> //interrupt header
 #include <util/delay.h> //delay header
 
+
 /* Bit masking of IO
 * |=	Bitwise OR
 * ^=	Bitwise XOR
@@ -40,7 +41,7 @@
 * PB3 = Reset (ISP)
 */
 
-/* Function Declarations */
+/* Function Prototypes */
 
 void setup(void);
 ISR (TIMER1_COMPA_vect);
