@@ -3,29 +3,31 @@ PowerBankFirmware.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000000b6  00000000  00000000  00000054  2**1
+  0 .text         0000028a  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  0000010a  2**0
+  1 .data         00000000  00800060  00800060  000002fe  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  0000010a  2**0
+  2 .bss          00000001  00800060  00800060  000002fe  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002fe  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000013c  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000330  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000038  00000000  00000000  0000017c  2**0
+  5 .debug_aranges 00000090  00000000  00000000  00000370  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000534  00000000  00000000  000001b4  2**0
+  6 .debug_info   00000b45  00000000  00000000  00000400  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000004a9  00000000  00000000  000006e8  2**0
+  7 .debug_abbrev 000007ab  00000000  00000000  00000f45  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000025a  00000000  00000000  00000b91  2**0
+  8 .debug_line   000006ba  00000000  00000000  000016f0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000074  00000000  00000000  00000dec  2**2
+  9 .debug_frame  0000014c  00000000  00000000  00001dac  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000308  00000000  00000000  00000e60  2**0
+ 10 .debug_str    000004fe  00000000  00000000  00001ef8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000078  00000000  00000000  00001168  2**0
+ 11 .debug_loc    00000348  00000000  00000000  000023f6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000028  00000000  00000000  000011e0  2**0
+ 12 .debug_ranges 00000070  00000000  00000000  0000273e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -69,18 +71,18 @@ Disassembly of section .text:
   3a:	1d 92       	st	X+, r1
 
 0000003c <.do_clear_bss_start>:
-  3c:	a0 36       	cpi	r26, 0x60	; 96
+  3c:	a1 36       	cpi	r26, 0x61	; 97
   3e:	b2 07       	cpc	r27, r18
   40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
-  42:	35 d0       	rcall	.+106    	; 0xae <main>
-  44:	36 c0       	rjmp	.+108    	; 0xb2 <_exit>
+  42:	2e d0       	rcall	.+92     	; 0xa0 <main>
+  44:	20 c1       	rjmp	.+576    	; 0x286 <_exit>
 
 00000046 <__bad_interrupt>:
   46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
 
 00000048 <__vector_13>:
 
-	}
+
 }
 
 ISR (TIMER0_COMPA_vect)		//timer based interrupt that triggers on compare match of OCR0A and TCNT0
@@ -107,81 +109,345 @@ ISR (TIMER1_COMPA_vect)		//timer based interrupt that triggers on compare match 
   60:	0f b6       	in	r0, 0x3f	; 63
   62:	0f 92       	push	r0
   64:	11 24       	eor	r1, r1
-  66:	8f 93       	push	r24
-  68:	9f 93       	push	r25
-	LED_TOGGLE;
-  6a:	98 b3       	in	r25, 0x18	; 24
-  6c:	81 e0       	ldi	r24, 0x01	; 1
-  6e:	89 27       	eor	r24, r25
-  70:	88 bb       	out	0x18, r24	; 24
-}
-  72:	9f 91       	pop	r25
-  74:	8f 91       	pop	r24
-  76:	0f 90       	pop	r0
-  78:	0f be       	out	0x3f, r0	; 63
-  7a:	0f 90       	pop	r0
-  7c:	1f 90       	pop	r1
-  7e:	18 95       	reti
 
-00000080 <setup>:
+}
+  66:	0f 90       	pop	r0
+  68:	0f be       	out	0x3f, r0	; 63
+  6a:	0f 90       	pop	r0
+  6c:	1f 90       	pop	r1
+  6e:	18 95       	reti
+
+00000070 <setup>:
 
 void setup(void)
 {
 	DDRA = 0b00000000;		//Set register A to all inputs (0)
-  80:	1a ba       	out	0x1a, r1	; 26
+  70:	1a ba       	out	0x1a, r1	; 26
 	PORTA = 0b11111111;		//enable all PORTA pull up resistors (1 enable , 0 disable, only when DDR is set to 0)
-  82:	8f ef       	ldi	r24, 0xFF	; 255
-  84:	8b bb       	out	0x1b, r24	; 27
+  72:	8f ef       	ldi	r24, 0xFF	; 255
+  74:	8b bb       	out	0x1b, r24	; 27
 	DDRB = 0b11111111;		//Set register B to all outputs (1)
-  86:	87 bb       	out	0x17, r24	; 23
+  76:	87 bb       	out	0x17, r24	; 23
 	PORTB = 0b00000000;		//all PORTB outputs initially low (1 high, 0 low)
-  88:	18 ba       	out	0x18, r1	; 24
+  78:	18 ba       	out	0x18, r1	; 24
 	DDRD = 0b00000000;		//Set register D to all inputs (0)
-  8a:	11 ba       	out	0x11, r1	; 17
+  7a:	11 ba       	out	0x11, r1	; 17
 	PORTD = 0b11111111;		//enable all PORTD pull up resistors (1 enable, 0 disable)
-  8c:	82 bb       	out	0x12, r24	; 18
+  7c:	82 bb       	out	0x12, r24	; 18
 	TCCR0A = 0b00000010;	//8 bit timer in CTC mode
-  8e:	92 e0       	ldi	r25, 0x02	; 2
-  90:	90 bf       	out	0x30, r25	; 48
+  7e:	92 e0       	ldi	r25, 0x02	; 2
+  80:	90 bf       	out	0x30, r25	; 48
 	TCCR0B = 0b00000101;	//prescaler 1024
-  92:	95 e0       	ldi	r25, 0x05	; 5
-  94:	93 bf       	out	0x33, r25	; 51
+  82:	95 e0       	ldi	r25, 0x05	; 5
+  84:	93 bf       	out	0x33, r25	; 51
 	OCR0A = 255;			//Max of 255, ** T_int = (1/(8Mhz/Prescaler))*OCR1A =  0.03264s **
-  96:	86 bf       	out	0x36, r24	; 54
+  86:	86 bf       	out	0x36, r24	; 54
 	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
-  98:	1f bc       	out	0x2f, r1	; 47
+  88:	1f bc       	out	0x2f, r1	; 47
 	TCCR1B = 0b00001100;	//prescaler 256
-  9a:	8c e0       	ldi	r24, 0x0C	; 12
-  9c:	8e bd       	out	0x2e, r24	; 46
-	OCR1A = 31250;			//Max of 65535, ** T_int = (1/(8Mhz/256))*OCR1A = 1s ** 
-  9e:	82 e1       	ldi	r24, 0x12	; 18
-  a0:	9a e7       	ldi	r25, 0x7A	; 122
-  a2:	9b bd       	out	0x2b, r25	; 43
-  a4:	8a bd       	out	0x2a, r24	; 42
+  8a:	8c e0       	ldi	r24, 0x0C	; 12
+  8c:	8e bd       	out	0x2e, r24	; 46
+	OCR1A = 31250;			//Max of 65535, ** T_int = (1/(8Mhz/256))*OCR1A = 1s **
+  8e:	82 e1       	ldi	r24, 0x12	; 18
+  90:	9a e7       	ldi	r25, 0x7A	; 122
+  92:	9b bd       	out	0x2b, r25	; 43
+  94:	8a bd       	out	0x2a, r24	; 42
 	TIMSK = 0b01000001;		//Compare match on OCR1A(TCNT1) and OCR0A(TCNT0)
-  a6:	81 e4       	ldi	r24, 0x41	; 65
-  a8:	89 bf       	out	0x39, r24	; 57
+  96:	81 e4       	ldi	r24, 0x41	; 65
+  98:	89 bf       	out	0x39, r24	; 57
 	sei();					//global interrupts enabled
-  aa:	78 94       	sei
-  ac:	08 95       	ret
+  9a:	78 94       	sei
+	USI_TWI_Master_Initialise();
+  9c:	17 d0       	rcall	.+46     	; 0xcc <USI_TWI_Master_Initialise>
+  9e:	08 95       	ret
 
-000000ae <main>:
+000000a0 <main>:
+
 #include "PowerBankHeader.h"
 #include "USI_TWI_Master.h"
 
 int main(void)
 {
+  a0:	cf 93       	push	r28
+  a2:	df 93       	push	r29
+  a4:	cd b7       	in	r28, 0x3d	; 61
+  a6:	dd 27       	eor	r29, r29
+  a8:	c4 50       	subi	r28, 0x04	; 4
+  aa:	cd bf       	out	0x3d, r28	; 61
 	setup();
-  ae:	e8 df       	rcall	.-48     	; 0x80 <setup>
-
-	while (1)
+  ac:	e1 df       	rcall	.-62     	; 0x70 <setup>
+	unsigned char TWI_targetSlaveAddress = PORT_ADDR;
+	unsigned char data;
+	while(1)
 	{
+		data = 1;
+		messageBuf[0] = (TWI_targetSlaveAddress<<TWI_ADR_BITS) | (0<<TWI_READ_BIT);
+  ae:	0e e4       	ldi	r16, 0x4E	; 78
+		messageBuf[1] = data << 4 | 0x0f;       // The second byte is used for the data.
+  b0:	1f e1       	ldi	r17, 0x1F	; 31
+	unsigned char TWI_targetSlaveAddress = PORT_ADDR;
+	unsigned char data;
+	while(1)
+	{
+		data = 1;
+		messageBuf[0] = (TWI_targetSlaveAddress<<TWI_ADR_BITS) | (0<<TWI_READ_BIT);
+  b2:	09 83       	std	Y+1, r16	; 0x01
+		messageBuf[1] = data << 4 | 0x0f;       // The second byte is used for the data.
+  b4:	1a 83       	std	Y+2, r17	; 0x02
+		USI_TWI_Start_Read_Write( messageBuf, 2 );
+  b6:	62 e0       	ldi	r22, 0x02	; 2
+  b8:	ce 01       	movw	r24, r28
+  ba:	01 96       	adiw	r24, 0x01	; 1
+  bc:	e0 d0       	rcall	.+448    	; 0x27e <USI_TWI_Start_Read_Write>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-	}
-  b0:	ff cf       	rjmp	.-2      	; 0xb0 <main+0x2>
+	__builtin_avr_delay_cycles(__ticks_dc);
+  be:	87 ea       	ldi	r24, 0xA7	; 167
+  c0:	91 e6       	ldi	r25, 0x61	; 97
+  c2:	01 97       	sbiw	r24, 0x01	; 1
+  c4:	f1 f7       	brne	.-4      	; 0xc2 <main+0x22>
+  c6:	00 c0       	rjmp	.+0      	; 0xc8 <main+0x28>
+  c8:	00 00       	nop
+  ca:	f3 cf       	rjmp	.-26     	; 0xb2 <main+0x12>
 
-000000b2 <_exit>:
-  b2:	f8 94       	cli
+000000cc <USI_TWI_Master_Initialise>:
+  *(msg) &= ~(1<<TWI_READ_BIT);		// clear the read bit if it's set
+  USI_TWI_state.errorState = 0;
+  USI_TWI_state.memReadMode = 1;
+  
+  return (USI_TWI_Start_Transceiver_With_Data( msg, msgSize));
+}
+  cc:	c5 9a       	sbi	0x18, 5	; 24
+  ce:	c7 9a       	sbi	0x18, 7	; 24
+  d0:	bf 9a       	sbi	0x17, 7	; 23
+  d2:	bd 9a       	sbi	0x17, 5	; 23
+  d4:	8f ef       	ldi	r24, 0xFF	; 255
+  d6:	8f b9       	out	0x0f, r24	; 15
+  d8:	8a e2       	ldi	r24, 0x2A	; 42
+  da:	8d b9       	out	0x0d, r24	; 13
+  dc:	80 ef       	ldi	r24, 0xF0	; 240
+  de:	8e b9       	out	0x0e, r24	; 14
+  e0:	08 95       	ret
 
-000000b4 <__stop_program>:
-  b4:	ff cf       	rjmp	.-2      	; 0xb4 <__stop_program>
+000000e2 <USI_TWI_Master_Transfer>:
+  e2:	8e b9       	out	0x0e, r24	; 14
+  e4:	8b e2       	ldi	r24, 0x2B	; 43
+  e6:	00 c0       	rjmp	.+0      	; 0xe8 <USI_TWI_Master_Transfer+0x6>
+  e8:	00 c0       	rjmp	.+0      	; 0xea <USI_TWI_Master_Transfer+0x8>
+  ea:	00 00       	nop
+  ec:	8d b9       	out	0x0d, r24	; 13
+  ee:	b7 9b       	sbis	0x16, 7	; 22
+  f0:	fe cf       	rjmp	.-4      	; 0xee <USI_TWI_Master_Transfer+0xc>
+  f2:	00 c0       	rjmp	.+0      	; 0xf4 <USI_TWI_Master_Transfer+0x12>
+  f4:	00 c0       	rjmp	.+0      	; 0xf6 <USI_TWI_Master_Transfer+0x14>
+  f6:	8d b9       	out	0x0d, r24	; 13
+  f8:	76 9b       	sbis	0x0e, 6	; 14
+  fa:	f5 cf       	rjmp	.-22     	; 0xe6 <USI_TWI_Master_Transfer+0x4>
+  fc:	00 c0       	rjmp	.+0      	; 0xfe <USI_TWI_Master_Transfer+0x1c>
+  fe:	00 c0       	rjmp	.+0      	; 0x100 <USI_TWI_Master_Transfer+0x1e>
+ 100:	00 00       	nop
+ 102:	8f b1       	in	r24, 0x0f	; 15
+ 104:	9f ef       	ldi	r25, 0xFF	; 255
+ 106:	9f b9       	out	0x0f, r25	; 15
+ 108:	bd 9a       	sbi	0x17, 5	; 23
+ 10a:	08 95       	ret
+
+0000010c <USI_TWI_Master_Start>:
+ 10c:	c7 9a       	sbi	0x18, 7	; 24
+ 10e:	c7 9b       	sbis	0x18, 7	; 24
+ 110:	fe cf       	rjmp	.-4      	; 0x10e <USI_TWI_Master_Start+0x2>
+ 112:	00 c0       	rjmp	.+0      	; 0x114 <USI_TWI_Master_Start+0x8>
+ 114:	00 c0       	rjmp	.+0      	; 0x116 <USI_TWI_Master_Start+0xa>
+ 116:	00 00       	nop
+ 118:	c5 98       	cbi	0x18, 5	; 24
+ 11a:	00 c0       	rjmp	.+0      	; 0x11c <USI_TWI_Master_Start+0x10>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <USI_TWI_Master_Start+0x12>
+ 11e:	c7 98       	cbi	0x18, 7	; 24
+ 120:	c5 9a       	sbi	0x18, 5	; 24
+ 122:	77 99       	sbic	0x0e, 7	; 14
+ 124:	05 c0       	rjmp	.+10     	; 0x130 <USI_TWI_Master_Start+0x24>
+ 126:	83 e0       	ldi	r24, 0x03	; 3
+ 128:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 12c:	80 e0       	ldi	r24, 0x00	; 0
+ 12e:	08 95       	ret
+ 130:	81 e0       	ldi	r24, 0x01	; 1
+ 132:	08 95       	ret
+
+00000134 <USI_TWI_Master_Stop>:
+ 134:	c5 98       	cbi	0x18, 5	; 24
+ 136:	c7 9a       	sbi	0x18, 7	; 24
+ 138:	b7 9b       	sbis	0x16, 7	; 22
+ 13a:	fe cf       	rjmp	.-4      	; 0x138 <USI_TWI_Master_Stop+0x4>
+ 13c:	00 c0       	rjmp	.+0      	; 0x13e <USI_TWI_Master_Stop+0xa>
+ 13e:	00 c0       	rjmp	.+0      	; 0x140 <USI_TWI_Master_Stop+0xc>
+ 140:	c5 9a       	sbi	0x18, 5	; 24
+ 142:	00 c0       	rjmp	.+0      	; 0x144 <USI_TWI_Master_Stop+0x10>
+ 144:	00 c0       	rjmp	.+0      	; 0x146 <USI_TWI_Master_Stop+0x12>
+ 146:	00 00       	nop
+ 148:	9e b1       	in	r25, 0x0e	; 14
+ 14a:	89 2f       	mov	r24, r25
+ 14c:	80 72       	andi	r24, 0x20	; 32
+ 14e:	95 fd       	sbrc	r25, 5
+ 150:	04 c0       	rjmp	.+8      	; 0x15a <USI_TWI_Master_Stop+0x26>
+ 152:	94 e0       	ldi	r25, 0x04	; 4
+ 154:	90 93 60 00 	sts	0x0060, r25	; 0x800060 <_edata>
+ 158:	08 95       	ret
+ 15a:	81 e0       	ldi	r24, 0x01	; 1
+ 15c:	08 95       	ret
+
+0000015e <USI_TWI_Start_Transceiver_With_Data>:
+ 15e:	8f 92       	push	r8
+ 160:	9f 92       	push	r9
+ 162:	af 92       	push	r10
+ 164:	bf 92       	push	r11
+ 166:	cf 92       	push	r12
+ 168:	df 92       	push	r13
+ 16a:	ef 92       	push	r14
+ 16c:	ff 92       	push	r15
+ 16e:	0f 93       	push	r16
+ 170:	1f 93       	push	r17
+ 172:	cf 93       	push	r28
+ 174:	df 93       	push	r29
+ 176:	7c 01       	movw	r14, r24
+ 178:	d6 2f       	mov	r29, r22
+ 17a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 17e:	81 60       	ori	r24, 0x01	; 1
+ 180:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 184:	f7 01       	movw	r30, r14
+ 186:	80 81       	ld	r24, Z
+ 188:	80 fd       	sbrc	r24, 0
+ 18a:	05 c0       	rjmp	.+10     	; 0x196 <USI_TWI_Start_Transceiver_With_Data+0x38>
+ 18c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 190:	82 60       	ori	r24, 0x02	; 2
+ 192:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 196:	ba df       	rcall	.-140    	; 0x10c <USI_TWI_Master_Start>
+ 198:	98 2f       	mov	r25, r24
+ 19a:	88 23       	and	r24, r24
+ 19c:	09 f4       	brne	.+2      	; 0x1a0 <USI_TWI_Start_Transceiver_With_Data+0x42>
+ 19e:	61 c0       	rjmp	.+194    	; 0x262 <USI_TWI_Start_Transceiver_With_Data+0x104>
+ 1a0:	cd 2f       	mov	r28, r29
+ 1a2:	87 01       	movw	r16, r14
+ 1a4:	bb 24       	eor	r11, r11
+ 1a6:	ba 94       	dec	r11
+ 1a8:	aa 24       	eor	r10, r10
+ 1aa:	a3 94       	inc	r10
+ 1ac:	8e 2c       	mov	r8, r14
+ 1ae:	9f 2c       	mov	r9, r15
+ 1b0:	90 91 60 00 	lds	r25, 0x0060	; 0x800060 <_edata>
+ 1b4:	93 70       	andi	r25, 0x03	; 3
+ 1b6:	c1 f1       	breq	.+112    	; 0x228 <USI_TWI_Start_Transceiver_With_Data+0xca>
+ 1b8:	c7 98       	cbi	0x18, 7	; 24
+ 1ba:	68 01       	movw	r12, r16
+ 1bc:	ff ef       	ldi	r31, 0xFF	; 255
+ 1be:	cf 1a       	sub	r12, r31
+ 1c0:	df 0a       	sbc	r13, r31
+ 1c2:	f8 01       	movw	r30, r16
+ 1c4:	80 81       	ld	r24, Z
+ 1c6:	8f b9       	out	0x0f, r24	; 15
+ 1c8:	80 ef       	ldi	r24, 0xF0	; 240
+ 1ca:	8b df       	rcall	.-234    	; 0xe2 <USI_TWI_Master_Transfer>
+ 1cc:	bd 98       	cbi	0x17, 5	; 23
+ 1ce:	8e ef       	ldi	r24, 0xFE	; 254
+ 1d0:	88 df       	rcall	.-240    	; 0xe2 <USI_TWI_Master_Transfer>
+ 1d2:	80 ff       	sbrs	r24, 0
+ 1d4:	0f c0       	rjmp	.+30     	; 0x1f4 <USI_TWI_Start_Transceiver_With_Data+0x96>
+ 1d6:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 1da:	98 2f       	mov	r25, r24
+ 1dc:	91 70       	andi	r25, 0x01	; 1
+ 1de:	80 ff       	sbrs	r24, 0
+ 1e0:	05 c0       	rjmp	.+10     	; 0x1ec <USI_TWI_Start_Transceiver_With_Data+0x8e>
+ 1e2:	81 e0       	ldi	r24, 0x01	; 1
+ 1e4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 1e8:	90 e0       	ldi	r25, 0x00	; 0
+ 1ea:	3b c0       	rjmp	.+118    	; 0x262 <USI_TWI_Start_Transceiver_With_Data+0x104>
+ 1ec:	82 e0       	ldi	r24, 0x02	; 2
+ 1ee:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 1f2:	37 c0       	rjmp	.+110    	; 0x262 <USI_TWI_Start_Transceiver_With_Data+0x104>
+ 1f4:	90 91 60 00 	lds	r25, 0x0060	; 0x800060 <_edata>
+ 1f8:	95 70       	andi	r25, 0x05	; 5
+ 1fa:	94 30       	cpi	r25, 0x04	; 4
+ 1fc:	71 f4       	brne	.+28     	; 0x21a <USI_TWI_Start_Transceiver_With_Data+0xbc>
+ 1fe:	f7 01       	movw	r30, r14
+ 200:	80 81       	ld	r24, Z
+ 202:	81 60       	ori	r24, 0x01	; 1
+ 204:	80 83       	st	Z, r24
+ 206:	a0 92 60 00 	sts	0x0060, r10	; 0x800060 <_edata>
+ 20a:	80 df       	rcall	.-256    	; 0x10c <USI_TWI_Master_Start>
+ 20c:	98 2f       	mov	r25, r24
+ 20e:	81 11       	cpse	r24, r1
+ 210:	1d c0       	rjmp	.+58     	; 0x24c <USI_TWI_Start_Transceiver_With_Data+0xee>
+ 212:	8a e0       	ldi	r24, 0x0A	; 10
+ 214:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 218:	24 c0       	rjmp	.+72     	; 0x262 <USI_TWI_Start_Transceiver_With_Data+0x104>
+ 21a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 21e:	8e 7f       	andi	r24, 0xFE	; 254
+ 220:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
+ 224:	86 01       	movw	r16, r12
+ 226:	15 c0       	rjmp	.+42     	; 0x252 <USI_TWI_Start_Transceiver_With_Data+0xf4>
+ 228:	bd 98       	cbi	0x17, 5	; 23
+ 22a:	68 01       	movw	r12, r16
+ 22c:	ff ef       	ldi	r31, 0xFF	; 255
+ 22e:	cf 1a       	sub	r12, r31
+ 230:	df 0a       	sbc	r13, r31
+ 232:	80 ef       	ldi	r24, 0xF0	; 240
+ 234:	56 df       	rcall	.-340    	; 0xe2 <USI_TWI_Master_Transfer>
+ 236:	f8 01       	movw	r30, r16
+ 238:	80 83       	st	Z, r24
+ 23a:	c1 30       	cpi	r28, 0x01	; 1
+ 23c:	11 f4       	brne	.+4      	; 0x242 <USI_TWI_Start_Transceiver_With_Data+0xe4>
+ 23e:	bf b8       	out	0x0f, r11	; 15
+ 240:	01 c0       	rjmp	.+2      	; 0x244 <USI_TWI_Start_Transceiver_With_Data+0xe6>
+ 242:	1f b8       	out	0x0f, r1	; 15
+ 244:	8e ef       	ldi	r24, 0xFE	; 254
+ 246:	4d df       	rcall	.-358    	; 0xe2 <USI_TWI_Master_Transfer>
+ 248:	86 01       	movw	r16, r12
+ 24a:	03 c0       	rjmp	.+6      	; 0x252 <USI_TWI_Start_Transceiver_With_Data+0xf4>
+ 24c:	cd 2f       	mov	r28, r29
+ 24e:	08 2d       	mov	r16, r8
+ 250:	19 2d       	mov	r17, r9
+ 252:	c1 50       	subi	r28, 0x01	; 1
+ 254:	09 f0       	breq	.+2      	; 0x258 <USI_TWI_Start_Transceiver_With_Data+0xfa>
+ 256:	ac cf       	rjmp	.-168    	; 0x1b0 <USI_TWI_Start_Transceiver_With_Data+0x52>
+ 258:	6d df       	rcall	.-294    	; 0x134 <USI_TWI_Master_Stop>
+ 25a:	91 e0       	ldi	r25, 0x01	; 1
+ 25c:	81 11       	cpse	r24, r1
+ 25e:	01 c0       	rjmp	.+2      	; 0x262 <USI_TWI_Start_Transceiver_With_Data+0x104>
+ 260:	90 e0       	ldi	r25, 0x00	; 0
+ 262:	89 2f       	mov	r24, r25
+ 264:	df 91       	pop	r29
+ 266:	cf 91       	pop	r28
+ 268:	1f 91       	pop	r17
+ 26a:	0f 91       	pop	r16
+ 26c:	ff 90       	pop	r15
+ 26e:	ef 90       	pop	r14
+ 270:	df 90       	pop	r13
+ 272:	cf 90       	pop	r12
+ 274:	bf 90       	pop	r11
+ 276:	af 90       	pop	r10
+ 278:	9f 90       	pop	r9
+ 27a:	8f 90       	pop	r8
+ 27c:	08 95       	ret
+
+0000027e <USI_TWI_Start_Read_Write>:
+ USI_TWI_Master.h
+---------------------------------------------------------------*/
+unsigned char USI_TWI_Start_Read_Write( unsigned char *msg, unsigned char msgSize)
+{
+    
+	USI_TWI_state.errorState = 0;				// Clears all mode bits also
+ 27e:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <_edata>
+  
+	return (USI_TWI_Start_Transceiver_With_Data( msg, msgSize));
+ 282:	6d df       	rcall	.-294    	; 0x15e <USI_TWI_Start_Transceiver_With_Data>
+	
+}
+ 284:	08 95       	ret
+
+00000286 <_exit>:
+ 286:	f8 94       	cli
+
+00000288 <__stop_program>:
+ 288:	ff cf       	rjmp	.-2      	; 0x288 <__stop_program>

@@ -15,14 +15,15 @@
 *
 *	12/15/08	Added declaration of USI_TWI_Start_Memory_Read	-jkl
 ****************************************************************************/
-#define  F_CPU 8000000UL
+#define  F_CPU 1000000UL
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <avr/io.h>
 //********** Defines **********//
 
-// Defines controlling timing limits - SCL <= 100KHz.
 
+// Defines controlling timing limits - SCL <= 100KHz.
+#define SYS_CLK   1000.0  // [kHz]	Default for ATtiny2313
 
 // For use with _delay_us()
 #define T2_TWI    5 		// >4,7us

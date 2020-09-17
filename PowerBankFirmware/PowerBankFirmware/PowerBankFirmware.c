@@ -12,10 +12,12 @@ int main(void)
 {
 	setup();
 
-	while (1)
+	while(1)
 	{
 
 	}
+
+
 }
 
 ISR (TIMER0_COMPA_vect)		//timer based interrupt that triggers on compare match of OCR0A and TCNT0
@@ -25,7 +27,7 @@ ISR (TIMER0_COMPA_vect)		//timer based interrupt that triggers on compare match 
 
 ISR (TIMER1_COMPA_vect)		//timer based interrupt that triggers on compare match of OCR1A and TCNT1
 {
-	LED_TOGGLE;
+
 }
 
 void setup(void)
@@ -41,7 +43,8 @@ void setup(void)
 	OCR0A = 255;			//Max of 255, ** T_int = (1/(8Mhz/Prescaler))*OCR1A =  0.03264s **
 	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
 	TCCR1B = 0b00001100;	//prescaler 256
-	OCR1A = 31250;			//Max of 65535, ** T_int = (1/(8Mhz/256))*OCR1A = 1s ** 
+	OCR1A = 31250;			//Max of 65535, ** T_int = (1/(8Mhz/256))*OCR1A = 1s **
 	TIMSK = 0b01000001;		//Compare match on OCR1A(TCNT1) and OCR0A(TCNT0)
 	sei();					//global interrupts enabled
+	USI_TWI_Master_Initialise();
 }
