@@ -53,13 +53,13 @@ Bit and byte definitions
 #define USI_TWI_BAD_MEM_READ	    0x0A  // Error during external memory read
 
 // Device Dependant defines - These for ATtiny2313.
-#define DDR_USI             DDRB
+#define DDR_USI             DDRA
 #define PORT_USI            PORTB
 #define PIN_USI             PINB
-#define PORT_USI_SDA        PORTB5
-#define PORT_USI_SCL        PORTB7
-#define PIN_USI_SDA         PINB5
-#define PIN_USI_SCL         PINB7
+#define PORT_USI_SDA        PORTA6
+#define PORT_USI_SCL        PORTA4
+#define PIN_USI_SDA         PINA6
+#define PIN_USI_SCL         PINA4
 
 
 //********** Prototypes **********//

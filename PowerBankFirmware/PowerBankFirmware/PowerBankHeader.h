@@ -32,12 +32,12 @@
 /* Defines for IO */
 #define LED4_ON (PORTA |= (1<<2))		//Set PA2 High
 #define LED3_ON (PORTA |= (1<<3))		//Set PA3 High
-#define LED2_ON (PORTA |= (1<<7))		//Set PA7 High
+#define LED2_ON (PORTA |= (1<<0))		//Set PA7 High
 #define LED1_ON (PORTB |= (1<<0))		//Set PB0 High
 
 #define LED4_OFF (PORTA &= ~(1<<2))		//Set PA2 Low
 #define LED3_OFF (PORTA &= ~(1<<3))		//Set PA3 Low
-#define LED2_OFF (PORTA &= ~(1<<7))		//Set PA7 Low
+#define LED2_OFF (PORTA &= ~(1<<0))		//Set PA7 Low
 #define LED1_OFF (PORTB &= ~(1<<0))		//Set PB0 Low
 
 #define buttonPressed !(PINB &= (1<<2))	//Read active low button press
@@ -47,7 +47,7 @@
 #define MESSAGEBUF_SIZE 4	//size of buffer for storing i2c read/write data.
 
 /* Pinout for AT Tiny 44A
-* PA0 = Vbat Analog
+* PA0/ADC0 = Vbat Analog
 * PA1/PCINT1 = Interrupt from Lipo Charger
 * PA2 = LED1
 * PA3 = LED2
@@ -64,5 +64,7 @@
 /* Function Prototypes */
 void setup(void);
 void ButtonAction(void);
+void buttonShort(void);
+void buttonLong(void);
 ISR (TIMER1_COMPA_vect);
 ISR (TIMER0_COMPA_vect);
