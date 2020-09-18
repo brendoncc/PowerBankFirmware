@@ -15,7 +15,7 @@
 *
 *	12/17/08	Added USI_TWI_Start_Memory_Read Routine		-jkl
 *		Note msg buffer will have slave adrs ( with write bit set) and memory adrs;
-*			length should be these two bytes plus the number of bytes to read.
+*		length should be these two bytes plus the number of bytes to read.
 ****************************************************************************/
 
 #include "USI_TWI_Master.h"

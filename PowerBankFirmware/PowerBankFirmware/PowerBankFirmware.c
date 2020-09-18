@@ -5,8 +5,12 @@
 * Author : ABJ
 */
 
+/* Header Files */
 #include "PowerBankHeader.h"
 #include "USI_TWI_Master.h"
+
+/* Global Variables */
+int charging = 0;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
 
 int main(void)
 {
@@ -14,37 +18,73 @@ int main(void)
 
 	while(1)
 	{
+		if (charging)
+		{
+			//enable timer to do LED sequence
+		}
+		else
+		{
+			//disable timer
+		}
+	}
+}
 
+void ButtonAction(void) //Called on interrupt of button push after waking.
+{
+	int count = 0;
+
+	while(buttonPressed && count < 200)	//kick out of loop if held longer than 2s
+	{
+		count++;
+		_delay_ms(10);
 	}
 
-
+	if (count > 10 && count < 60) //press between 100 and 600ms is considered short.
+	{
+		buttonShort;
+	}
+	else if (count >= 60) // press longer than 600ms is considered long.
+	{
+		buttonLong;
+	}
+	else //Do nothing if button press is less than 100ms or other state.
+	{
+		return;
+	}
 }
 
-ISR (TIMER0_COMPA_vect)		//timer based interrupt that triggers on compare match of OCR0A and TCNT0
+void buttonShort(void);
 {
-
+	//show battery voltage
 }
 
-ISR (TIMER1_COMPA_vect)		//timer based interrupt that triggers on compare match of OCR1A and TCNT1
+void buttonLong(void);
 {
+	if (charging)
+	{
+		//show charge current
+	}
+	else
+	{
+		//tbd
+	}
+}
 
+ISR (INT0_vect)		//Interrupt based on user button push. Used to wake uC and then determine short or long press.
+{
+	ButtonAction();
 }
 
 void setup(void)
 {
-	DDRA = 0b00000000;		//Set register A to all inputs (0)
-	PORTA = 0b11111111;		//enable all PORTA pull up resistors (1 enable , 0 disable, only when DDR is set to 0)
-	DDRB = 0b11111111;		//Set register B to all outputs (1)
-	PORTB = 0b00000000;		//all PORTB outputs initially low (1 high, 0 low)
-	DDRD = 0b00000000;		//Set register D to all inputs (0)
-	PORTD = 0b11111111;		//enable all PORTD pull up resistors (1 enable, 0 disable)
-	TCCR0A = 0b00000010;	//8 bit timer in CTC mode
-	TCCR0B = 0b00000101;	//prescaler 1024
-	OCR0A = 255;			//Max of 255, ** T_int = (1/(8Mhz/Prescaler))*OCR1A =  0.03264s **
-	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
-	TCCR1B = 0b00001100;	//prescaler 256
-	OCR1A = 31250;			//Max of 65535, ** T_int = (1/(8Mhz/256))*OCR1A = 1s **
-	TIMSK = 0b01000001;		//Compare match on OCR1A(TCNT1) and OCR0A(TCNT0)
+	DDRA = 0b10001100;		//Set register A I/O Based on pin out in header file (1 output, 0 input).
+	PORTA = 0b00000000;		//Disable pull up resistors as we have external. Set outputs to initially low. (DDR = 0, 1 enable, 0 disable, DDR = 1, 1 high, 0 low)
+	DDRB = 0b00000001;		//Set register B based on pin out in header file.
+	PORTB = 0b00000000;		//Disable pull up resistors. Set outputs initially low.
+	//EICRB
+	//EIMSK
+	 
 	sei();					//global interrupts enabled
 	USI_TWI_Master_Initialise();
 }
+
