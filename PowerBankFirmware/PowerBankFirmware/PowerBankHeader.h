@@ -40,7 +40,13 @@
 #define LED2_OFF (PORTA &= ~(1<<0))		//Set PA7 Low
 #define LED1_OFF (PORTB &= ~(1<<0))		//Set PB0 Low
 
-#define buttonPressed !(PINB &= (1<<2))	//Read active low button press
+#define LED4_TOGGLE (PORTA ^= (1<<2))
+#define LED3_TOGGLE (PORTA ^= (1<<3))		//Set PA3 Low
+#define LED2_TOGGLE (PORTA ^= (1<<0))		//Set PA7 Low
+#define LED1_TOGGLE (PORTB ^= (1<<0))
+
+
+#define BUTTON_PRESSED !(PINB &= (1<<2))	//Read active low button press
 
 /* Defines for I2C Communication */
 #define PORT_ADDR  0x27	//i2c address of LCD for testing
@@ -62,9 +68,9 @@
 */
 
 /* Function Prototypes */
-void setup(void);
+void Setup(void);
 void ButtonAction(void);
-void buttonShort(void);
-void buttonLong(void);
+void ButtonShort(void);
+void ButtonLong(void);
 ISR (TIMER1_COMPA_vect);
 ISR (TIMER0_COMPA_vect);

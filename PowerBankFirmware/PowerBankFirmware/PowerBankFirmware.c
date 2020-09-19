@@ -10,33 +10,34 @@
 #include "USI_TWI_Master.h"
 
 /* Global Variables */
-int charging = 0;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
-volatile int LEDcount = 0;
+int battCharging = 0;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
+int chargerError = 0;		//read from i2c whether charger is in fault. LEDS will flash if fault occurs.
+double battPercentage = 0;	//calculated from analog.
+double battCurrent = 0;
+volatile int ledCount = 0;
 
 int main(void)
 {
-	setup();
+	Setup();
 
 	while(1)
 	{
-		if (charging)
+		//ADCW holds full 10 bit result from ADCH and ADCL registers.
+		//4.2V = 100%, 3.5V = 0%. Making linear approximation of V vs Charge relationship. 3.5V min due to LDO cutoffs.
+
+		battPercentage = (((ADCW*(5/1024))-3.5)/0.7)*100;
+		if (battPercentage < 5)
 		{
-			//enable timer to do LED sequence
-			TIMSK1 = 0b00000010;		//Generate interrupt on compare match of OCR1A(TCNT1)
-		}
-		else
-		{
-			//disable interrupt
-			TIMSK1 = 0b00000000;		
+			//shut down batfet from i2c. Need to plug into power source to restore batfet.
 		}
 	}
 }
 
-void ButtonAction(void) //Called on interrupt of button push after waking.
+void ButtonAction(void) //Determines short or long button press after interrupt.
 {
 	int count = 0;
 
-	while(buttonPressed && count < 200)	//kick out of loop if held longer than 2s
+	while(BUTTON_PRESSED && count < 200)	//kick out of loop if held longer than 2s
 	{
 		count++;
 		_delay_ms(10);
@@ -44,11 +45,57 @@ void ButtonAction(void) //Called on interrupt of button push after waking.
 
 	if (count > 10 && count < 80) //press between 100 and 800ms is considered short.
 	{
-		buttonShort();
+		//short button press shows voltage when not charging.
+		FlashLEDs(1);	//flash LEDs once to indicate short press.
+		if (battPercentage >= 75)
+		{
+			LED1_ON, LED2_ON, LED3_ON, LED4_ON;
+		}
+		else if (battPercentage >= 50)
+		{
+			LED1_ON, LED2_ON, LED3_ON;
+		}
+		else if (battPercentage >= 25)
+		{
+			LED1_ON, LED2_ON;
+		}
+		else if (battPercentage > 0)
+		{
+			LED1_ON;
+		}
+		else
+		{
+			// error (batt below 0)
+		}
+		_delay_ms(2000);
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 	}
 	else if (count >= 80) // press longer than 800ms is considered long.
 	{
-		buttonLong();
+		//long button press shows battery current.
+		FlashLEDs(2);	//flash twice to indicate long press.
+		if (battCurrent >= 3)
+		{
+			LED1_ON, LED2_ON, LED3_ON, LED4_ON;
+		}
+		else if (battCurrent >= 2)
+		{
+			LED1_ON, LED2_ON, LED3_ON;
+		}
+		else if (battCurrent >= 1)
+		{
+			LED1_ON, LED2_ON;
+		}
+		else if (battCurrent > 0)
+		{
+			LED1_ON;
+		}
+		else
+		{
+			// error (batt current below 0)
+		}
+		_delay_ms(2000);
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 	}
 	else //Do nothing if button press is less than 100ms or other state.
 	{
@@ -56,20 +103,14 @@ void ButtonAction(void) //Called on interrupt of button push after waking.
 	}
 }
 
-void buttonShort(void)
+void FlashLEDs(int numFlashes)
 {
-	//show battery voltage
-}
-
-void buttonLong(void)
-{
-	if (charging)
+	for (int i = 0; i < numFlashes; i++)
 	{
-		//show charge current
-	}
-	else
-	{
-		//tbd
+		LED1_ON, LED2_ON, LED3_ON, LED4_ON;	//all on for 250ms.
+		_delay_ms(250);
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
+		_delay_ms(250);
 	}
 }
 
@@ -79,42 +120,46 @@ ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and 
 }
 
 ISR (TIM1_COMPA_vect)
-{	
-	if (LEDcount == 1)
+{
+	if(battCharging)
 	{
-		LED1_ON;
+		if (ledCount == 1)
+		{
+			LED1_ON;
+		}
+		else if (ledCount == 2)
+		{
+			LED2_ON;
+		}
+		else if (ledCount == 3)
+		{
+			LED3_ON;
+		}
+		else if (ledCount == 4)
+		{
+			LED4_ON;
+		}
+		if (ledCount > 4)
+		{
+			ledCount = 0;
+			LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
+		}
+		ledCount++;
 	}
-	else if (LEDcount == 2)
-	{
-		LED2_ON;
-	}
-	else if (LEDcount == 3)
-	{
-		LED3_ON;
-	}
-	else if (LEDcount == 4)
-	{
-		LED4_ON;
-	}
-	if (LEDcount > 4)
-	{
-		LEDcount = 0;
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
-	}
-	LEDcount++;
 }
 
-void setup(void)
+void Setup(void)
 {
 	DDRA = 0b10001100;		//Set register A I/O Based on pin out in header file (1 output, 0 input).
 	PORTA = 0b00000000;		//Disable pull up resistors as we have external. Set outputs to initially low. (DDR = 0, 1 enable, 0 disable, DDR = 1, 1 high, 0 low)
 	DDRB = 0b00000001;		//Set register B based on pin out in header file.
 	PORTB = 0b00000100;		//Disable pull up resistors. Set outputs initially low.
-
-	ADCSRA = 0b11000111;	//enable ADC and start conversion (bit 6), 128 prescaler for ADC clock.
+	
+	ADMUX = 0b00000000;		//ADC ref is Vcc, No mux settings therefore ADC0 is used.
+	ADCSRA = 0b11000111;	//enable (bit 7, disable before sleep) ADC and start conversion (bit 6), 128 prescaler for ADC clock.
 	ADCSRB = 0b00000000;	//free running mode
 	DIDR0 = 0b00000001;		//disable digital input buffer on ADC as recommended to reduce power consumption.
-		
+	
 	MCUCR = 0b00000000;		//low level of INT0 triggers interrupt
 	GIMSK = 0b01010000;		//enable INT0 external interrupt and allow enabling of PC interrupts 0 to 7.
 	PCMSK0 = 0b00000000;	//Set bit 1 to 1 to enable PCINT1 interrupt. All others disabled. Only needed if using Lipo charging interrupt.
@@ -122,6 +167,7 @@ void setup(void)
 	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
 	TCCR1B = 0b00001100;	//prescaler 256 and CTC mode
 	OCR1A = 15625;			//Max of 65535, ** T_int = (1Mhz/256)/OCR1A = 0.25s **
+	TIMSK1 = 0b00000010;		//Generate interrupt on compare match of OCR1A(TCNT1)
 
 	sei();					//global interrupts enabled
 

@@ -3,31 +3,31 @@ PowerBankFirmware.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000192  00000000  00000000  00000074  2**1
+  0 .text         000001ae  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  00000206  2**0
+  1 .data         00000000  00800060  00800060  00000222  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000004  00800060  00800060  00000206  2**0
+  2 .bss          00000006  00800060  00800060  00000222  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000206  2**0
+  3 .comment      00000030  00000000  00000000  00000222  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000238  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000254  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000a8  00000000  00000000  00000274  2**0
+  5 .debug_aranges 000000a8  00000000  00000000  00000290  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000b1c  00000000  00000000  0000031c  2**0
+  6 .debug_info   00000b2e  00000000  00000000  00000338  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000075a  00000000  00000000  00000e38  2**0
+  7 .debug_abbrev 0000075a  00000000  00000000  00000e66  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000713  00000000  00000000  00001592  2**0
+  8 .debug_line   0000073d  00000000  00000000  000015c0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001b0  00000000  00000000  00001ca8  2**2
+  9 .debug_frame  000001b0  00000000  00000000  00001d00  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000004f5  00000000  00000000  00001e58  2**0
+ 10 .debug_str    0000050b  00000000  00000000  00001eb0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000431  00000000  00000000  0000234d  2**0
+ 11 .debug_loc    00000431  00000000  00000000  000023bb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000088  00000000  00000000  0000277e  2**0
+ 12 .debug_ranges 00000088  00000000  00000000  000027ec  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -69,11 +69,11 @@ Disassembly of section .text:
   36:	1d 92       	st	X+, r1
 
 00000038 <.do_clear_bss_start>:
-  38:	a4 36       	cpi	r26, 0x64	; 100
+  38:	a6 36       	cpi	r26, 0x66	; 102
   3a:	b2 07       	cpc	r27, r18
   3c:	e1 f7       	brne	.-8      	; 0x36 <.do_clear_bss_loop>
-  3e:	90 d0       	rcall	.+288    	; 0x160 <main>
-  40:	a6 c0       	rjmp	.+332    	; 0x18e <_exit>
+  3e:	98 d0       	rcall	.+304    	; 0x170 <main>
+  40:	b4 c0       	rjmp	.+360    	; 0x1aa <_exit>
 
 00000042 <__bad_interrupt>:
   42:	de cf       	rjmp	.-68     	; 0x0 <__vectors>
@@ -83,7 +83,7 @@ Disassembly of section .text:
 	//show battery voltage
 }
 
-void buttonLong(void)
+void ButtonLong(void)
 {
   44:	86 b3       	in	r24, 0x16	; 22
   46:	84 70       	andi	r24, 0x04	; 4
@@ -134,6 +134,7 @@ ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and 
   90:	ff 93       	push	r31
 	ButtonAction();
   92:	d8 df       	rcall	.-80     	; 0x44 <ButtonAction>
+
 }
   94:	ff 91       	pop	r31
   96:	ef 91       	pop	r30
@@ -164,7 +165,7 @@ ISR (TIM1_COMPA_vect)
   be:	11 24       	eor	r1, r1
   c0:	8f 93       	push	r24
   c2:	9f 93       	push	r25
-	if (LEDcount == 1)
+	if (ledCount == 1)
   c4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
   c8:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
   cc:	01 97       	sbiw	r24, 0x01	; 1
@@ -174,7 +175,7 @@ ISR (TIM1_COMPA_vect)
   d0:	c0 9a       	sbi	0x18, 0	; 24
   d2:	17 c0       	rjmp	.+46     	; 0x102 <__vector_6+0x4c>
 	}
-	else if (LEDcount == 2)
+	else if (ledCount == 2)
   d4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
   d8:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
   dc:	02 97       	sbiw	r24, 0x02	; 2
@@ -184,7 +185,7 @@ ISR (TIM1_COMPA_vect)
   e0:	d8 9a       	sbi	0x1b, 0	; 27
   e2:	0f c0       	rjmp	.+30     	; 0x102 <__vector_6+0x4c>
 	}
-	else if (LEDcount == 3)
+	else if (ledCount == 3)
   e4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
   e8:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
   ec:	03 97       	sbiw	r24, 0x03	; 3
@@ -194,7 +195,7 @@ ISR (TIM1_COMPA_vect)
   f0:	db 9a       	sbi	0x1b, 3	; 27
   f2:	07 c0       	rjmp	.+14     	; 0x102 <__vector_6+0x4c>
 	}
-	else if (LEDcount == 4)
+	else if (ledCount == 4)
   f4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
   f8:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
   fc:	04 97       	sbiw	r24, 0x04	; 4
@@ -203,13 +204,13 @@ ISR (TIM1_COMPA_vect)
 		LED4_ON;
  100:	da 9a       	sbi	0x1b, 2	; 27
 	}
-	if (LEDcount > 4)
+	if (ledCount > 4)
  102:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
  106:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
  10a:	05 97       	sbiw	r24, 0x05	; 5
  10c:	44 f0       	brlt	.+16     	; 0x11e <__vector_6+0x68>
 	{
-		LEDcount = 0;
+		ledCount = 0;
  10e:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <_edata+0x1>
  112:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <_edata>
 		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
@@ -218,7 +219,7 @@ ISR (TIM1_COMPA_vect)
  11a:	db 98       	cbi	0x1b, 3	; 27
  11c:	da 98       	cbi	0x1b, 2	; 27
 	}
-	LEDcount++;
+	ledCount++;
  11e:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
  122:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
  126:	01 96       	adiw	r24, 0x01	; 1
@@ -233,9 +234,9 @@ ISR (TIM1_COMPA_vect)
  13a:	1f 90       	pop	r1
  13c:	18 95       	reti
 
-0000013e <setup>:
+0000013e <Setup>:
 
-void setup(void)
+void Setup(void)
 {
 	DDRA = 0b10001100;		//Set register A I/O Based on pin out in header file (1 output, 0 input).
  13e:	8c e8       	ldi	r24, 0x8C	; 140
@@ -246,96 +247,116 @@ void setup(void)
  144:	81 e0       	ldi	r24, 0x01	; 1
  146:	87 bb       	out	0x17, r24	; 23
 	PORTB = 0b00000100;		//Disable pull up resistors. Set outputs initially low.
- 148:	84 e0       	ldi	r24, 0x04	; 4
- 14a:	88 bb       	out	0x18, r24	; 24
+ 148:	94 e0       	ldi	r25, 0x04	; 4
+ 14a:	98 bb       	out	0x18, r25	; 24
 
-	//EICRB
-	//EIMSK
+	ADCSRA = 0b11000111;	//enable (bit 7, disable before sleep) ADC and start conversion (bit 6), 128 prescaler for ADC clock.
+ 14c:	97 ec       	ldi	r25, 0xC7	; 199
+ 14e:	96 b9       	out	0x06, r25	; 6
+	ADCSRB = 0b00000000;	//free running mode
+ 150:	13 b8       	out	0x03, r1	; 3
+	DIDR0 = 0b00000001;		//disable digital input buffer on ADC as recommended to reduce power consumption.
+ 152:	81 b9       	out	0x01, r24	; 1
+		
+	MCUCR = 0b00000000;		//low level of INT0 triggers interrupt
+ 154:	15 be       	out	0x35, r1	; 53
+	GIMSK = 0b01010000;		//enable INT0 external interrupt and allow enabling of PC interrupts 0 to 7.
+ 156:	80 e5       	ldi	r24, 0x50	; 80
+ 158:	8b bf       	out	0x3b, r24	; 59
+	PCMSK0 = 0b00000000;	//Set bit 1 to 1 to enable PCINT1 interrupt. All others disabled. Only needed if using Lipo charging interrupt.
+ 15a:	12 ba       	out	0x12, r1	; 18
 
 	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
- 14c:	1f bc       	out	0x2f, r1	; 47
+ 15c:	1f bc       	out	0x2f, r1	; 47
 	TCCR1B = 0b00001100;	//prescaler 256 and CTC mode
- 14e:	8c e0       	ldi	r24, 0x0C	; 12
- 150:	8e bd       	out	0x2e, r24	; 46
+ 15e:	8c e0       	ldi	r24, 0x0C	; 12
+ 160:	8e bd       	out	0x2e, r24	; 46
 	OCR1A = 15625;			//Max of 65535, ** T_int = (1Mhz/256)/OCR1A = 0.25s **
- 152:	89 e0       	ldi	r24, 0x09	; 9
- 154:	9d e3       	ldi	r25, 0x3D	; 61
- 156:	9b bd       	out	0x2b, r25	; 43
- 158:	8a bd       	out	0x2a, r24	; 42
-	sei();					//global interrupts enabled
- 15a:	78 94       	sei
-	USI_TWI_Master_Initialise();
- 15c:	0d d0       	rcall	.+26     	; 0x178 <USI_TWI_Master_Initialise>
- 15e:	08 95       	ret
+ 162:	89 e0       	ldi	r24, 0x09	; 9
+ 164:	9d e3       	ldi	r25, 0x3D	; 61
+ 166:	9b bd       	out	0x2b, r25	; 43
+ 168:	8a bd       	out	0x2a, r24	; 42
 
-00000160 <main>:
-int charging = 0;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
-volatile int LEDcount = 0;
+	sei();					//global interrupts enabled
+ 16a:	78 94       	sei
+
+	USI_TWI_Master_Initialise();
+ 16c:	13 d0       	rcall	.+38     	; 0x194 <USI_TWI_Master_Initialise>
+ 16e:	08 95       	ret
+
+00000170 <main>:
+int battVoltage = 0;
+volatile int ledCount = 0;
 
 int main(void)
 {
-	setup();
- 160:	ee df       	rcall	.-36     	; 0x13e <setup>
+	Setup();
+ 170:	e6 df       	rcall	.-52     	; 0x13e <Setup>
 	while(1)
 	{
-		if (charging)
+		if (battCharging)
 		{
-			//enable timer to do LED sequence
+			//enable timer interrupt to do LED sequence
 			TIMSK1 = 0b00000010;		//Generate interrupt on compare match of OCR1A(TCNT1)
- 162:	22 e0       	ldi	r18, 0x02	; 2
+ 172:	22 e0       	ldi	r18, 0x02	; 2
 {
-	setup();
+	Setup();
 
 	while(1)
 	{
-		if (charging)
- 164:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <charging>
- 168:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <charging+0x1>
- 16c:	89 2b       	or	r24, r25
- 16e:	11 f0       	breq	.+4      	; 0x174 <main+0x14>
+		if (battCharging)
+ 174:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <battCharging>
+ 178:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <battCharging+0x1>
+ 17c:	89 2b       	or	r24, r25
+ 17e:	11 f0       	breq	.+4      	; 0x184 <main+0x14>
 		{
-			//enable timer to do LED sequence
+			//enable timer interrupt to do LED sequence
 			TIMSK1 = 0b00000010;		//Generate interrupt on compare match of OCR1A(TCNT1)
- 170:	2c b9       	out	0x0c, r18	; 12
- 172:	f8 cf       	rjmp	.-16     	; 0x164 <main+0x4>
+ 180:	2c b9       	out	0x0c, r18	; 12
+ 182:	f8 cf       	rjmp	.-16     	; 0x174 <main+0x4>
 		}
 		else
 		{
 			//disable interrupt
-			TIMSK1 = 0b00000000;		
- 174:	1c b8       	out	0x0c, r1	; 12
- 176:	f6 cf       	rjmp	.-20     	; 0x164 <main+0x4>
+			TIMSK1 = 0b00000000;
+ 184:	1c b8       	out	0x0c, r1	; 12
+			battVoltage = ADCW;	//adcw holds full 10 bit result from ADCH and ADCL registers.	
+ 186:	84 b1       	in	r24, 0x04	; 4
+ 188:	95 b1       	in	r25, 0x05	; 5
+ 18a:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <battVoltage+0x1>
+ 18e:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <battVoltage>
+ 192:	f0 cf       	rjmp	.-32     	; 0x174 <main+0x4>
 
-00000178 <USI_TWI_Master_Initialise>:
+00000194 <USI_TWI_Master_Initialise>:
 /*---------------------------------------------------------------
 USI TWI single master initialization function
 ---------------------------------------------------------------*/
 void USI_TWI_Master_Initialise( void )
 {
 	PORT_USI |= (1<<PIN_USI_SDA);           // Enable pullup on SDA, to set high as released state.
- 178:	c6 9a       	sbi	0x18, 6	; 24
+ 194:	c6 9a       	sbi	0x18, 6	; 24
 	PORT_USI |= (1<<PIN_USI_SCL);           // Enable pullup on SCL, to set high as released state.
- 17a:	c4 9a       	sbi	0x18, 4	; 24
+ 196:	c4 9a       	sbi	0x18, 4	; 24
 	DDR_USI  |= (1<<PIN_USI_SCL);           // Enable SCL as output.
- 17c:	d4 9a       	sbi	0x1a, 4	; 26
+ 198:	d4 9a       	sbi	0x1a, 4	; 26
 	DDR_USI  |= (1<<PIN_USI_SDA);           // Enable SDA as output.
- 17e:	d6 9a       	sbi	0x1a, 6	; 26
+ 19a:	d6 9a       	sbi	0x1a, 6	; 26
 	USIDR    =  0xFF;                       // Preload dataregister with "released level" data.
- 180:	8f ef       	ldi	r24, 0xFF	; 255
- 182:	8f b9       	out	0x0f, r24	; 15
+ 19c:	8f ef       	ldi	r24, 0xFF	; 255
+ 19e:	8f b9       	out	0x0f, r24	; 15
 	USICR    =  (0<<USISIE)|(0<<USIOIE)|                            // Disable Interrupts.
- 184:	8a e2       	ldi	r24, 0x2A	; 42
- 186:	8d b9       	out	0x0d, r24	; 13
+ 1a0:	8a e2       	ldi	r24, 0x2A	; 42
+ 1a2:	8d b9       	out	0x0d, r24	; 13
 	(1<<USIWM1)|(0<<USIWM0)|                            // Set USI in Two-wire mode.
 	(1<<USICS1)|(0<<USICS0)|(1<<USICLK)|                // Software stobe as counter clock source
 	(0<<USITC);
 	USISR   =   (1<<USISIF)|(1<<USIOIF)|(1<<USIPF)|(1<<USIDC)|      // Clear flags,
- 188:	80 ef       	ldi	r24, 0xF0	; 240
- 18a:	8e b9       	out	0x0e, r24	; 14
- 18c:	08 95       	ret
+ 1a4:	80 ef       	ldi	r24, 0xF0	; 240
+ 1a6:	8e b9       	out	0x0e, r24	; 14
+ 1a8:	08 95       	ret
 
-0000018e <_exit>:
- 18e:	f8 94       	cli
+000001aa <_exit>:
+ 1aa:	f8 94       	cli
 
-00000190 <__stop_program>:
- 190:	ff cf       	rjmp	.-2      	; 0x190 <__stop_program>
+000001ac <__stop_program>:
+ 1ac:	ff cf       	rjmp	.-2      	; 0x1ac <__stop_program>
