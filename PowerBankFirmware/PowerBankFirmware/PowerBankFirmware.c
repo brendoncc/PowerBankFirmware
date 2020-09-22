@@ -15,6 +15,8 @@ int chargerError = 0;		//read from i2c whether charger is in fault. LEDS will fl
 double battPercentage = 0;	//calculated from analog.
 double battCurrent = 0;
 volatile int ledCount = 0;
+int buttonFlag = 0;
+int flashDelay = 0;
 
 int main(void)
 {
@@ -22,18 +24,33 @@ int main(void)
 
 	while(1)
 	{
-		//ADCW holds full 10 bit result from ADCH and ADCL registers.
-		//4.2V = 100%, 3.5V = 0%. Making linear approximation of V vs Charge relationship. 3.5V min due to LDO cutoffs.
-
-		battPercentage = (((ADCW*(5/1024))-3.5)/0.7)*100;
+		battPercentage = (((ADCW*(5/1024))-3.5)/0.7)*100;	//ADCW holds full 10 bit result from ADCH and ADCL registers.
+															//4.2V = 100%, 3.5V = 0%. Making linear approximation of V vs Charge relationship. 3.5V min due to LDO cutoffs.
 		if (battPercentage < 5)
 		{
-			//shut down batfet from i2c. Need to plug into power source to restore batfet.
+			//shut down BATFET via i2c. Need to plug into power source to restore BATFET.
 		}
+
+		if (buttonFlag == 1)
+		{
+			ButtonAction();
+			buttonFlag = 0;
+		}
+
+		if (battCharging)
+		{
+			TIMSK1 = 0b00000010;		//Generate timer interrupt on compare match of OCR1A(TCNT1)
+		}
+		else
+		{
+			TIMSK1 = 0b00000000;		//Disable timer interrupt.
+		}
+
+		//READ I2C and Update Variables Accordingly.
 	}
 }
 
-void ButtonAction(void) //Determines short or long button press after interrupt.
+void ButtonAction(void) //Determines short or long button press after interrupt and acts accordingly.
 {
 	int count = 0;
 
@@ -107,45 +124,43 @@ void FlashLEDs(int numFlashes)
 {
 	for (int i = 0; i < numFlashes; i++)
 	{
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
+		_delay_ms(250);
 		LED1_ON, LED2_ON, LED3_ON, LED4_ON;	//all on for 250ms.
 		_delay_ms(250);
 		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
-		_delay_ms(250);
 	}
 }
 
-ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and then determine short or long press.
+ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and then set flag that button has been pushed.
 {
-	ButtonAction();
+	buttonFlag = 1;
 }
 
-ISR (TIM1_COMPA_vect)
+ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging.
 {
-	if(battCharging)
+	if (ledCount == 1)
 	{
-		if (ledCount == 1)
-		{
-			LED1_ON;
-		}
-		else if (ledCount == 2)
-		{
-			LED2_ON;
-		}
-		else if (ledCount == 3)
-		{
-			LED3_ON;
-		}
-		else if (ledCount == 4)
-		{
-			LED4_ON;
-		}
-		if (ledCount > 4)
-		{
-			ledCount = 0;
-			LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
-		}
-		ledCount++;
+		LED1_ON;
 	}
+	else if (ledCount == 2)
+	{
+		LED2_ON;
+	}
+	else if (ledCount == 3)
+	{
+		LED3_ON;
+	}
+	else if (ledCount == 4)
+	{
+		LED4_ON;
+	}
+	if (ledCount > 4)
+	{
+		ledCount = 0;
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
+	}
+	ledCount++;
 }
 
 void Setup(void)

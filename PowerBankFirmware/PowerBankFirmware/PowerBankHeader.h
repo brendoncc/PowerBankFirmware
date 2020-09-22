@@ -72,5 +72,6 @@ void Setup(void);
 void ButtonAction(void);
 void ButtonShort(void);
 void ButtonLong(void);
+void FlashLEDs(int numFlashes);
 ISR (TIMER1_COMPA_vect);
 ISR (TIMER0_COMPA_vect);
