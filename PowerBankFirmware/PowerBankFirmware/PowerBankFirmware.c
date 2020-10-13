@@ -81,8 +81,7 @@ void ButtonAction(void) //Determines short or long button press after interrupt 
 			LED1_ON;
 		}
 		else
-		{
-			// error (batt below 0)
+		{ 
 		}
 		_delay_ms(2000);
 		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
