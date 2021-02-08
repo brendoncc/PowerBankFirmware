@@ -11,9 +11,9 @@
 
 /* Global Variables */
 int battCharging = 1;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
-int chargerError = 0;		//read from i2c whether charger is in fault. LEDS will flash if fault occurs.
-double battPercentage = 80;	//calculated from analog.
-double battCurrent = 0.5;
+int chargerError = 1;		//read from i2c whether charger is in fault. LEDS will flash if fault occurs.
+double battPercentage = 0;	//calculated from analog.
+double battCurrent = 0;
 volatile int ledCount = 0; 
 int buttonFlag = 0;
 int flashDelay = 0;
@@ -29,6 +29,11 @@ int main(void)
 		if (battPercentage < 5)
 		{
 			//shut down BATFET via i2c. Need to plug into power source to restore BATFET.
+		}
+		if(chargerError)
+		{	
+			TIMSK1 = 0b00000000; // stop timer
+			FlashLEDs(1);
 		}
 
 		if (buttonFlag == 1)
@@ -52,7 +57,7 @@ int main(void)
 
 void ButtonAction(void) //Determines short or long button press after interrupt and acts accordingly.
 {
-	TIMSK1 = 0b00000000;		//Disable timer interrupt. Pause timer for LED status
+	TIMSK1 = 0b00000000;		//Pause timer for LED status
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 
 	if (1) //press between 100 and 800ms is considered short.
@@ -122,6 +127,18 @@ void ButtonAction(void) //Determines short or long button press after interrupt 
 	ledCount = 0;	//reset timer LED so we dont start halfway through cycle
 	TIMSK1 = 0b00000010;		//Resume timer after LED status
 
+}
+
+void FlashLEDs(int numFlashes)
+{
+	for (int i = 0; i < numFlashes; i++)
+	{
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
+		_delay_ms(250);
+		LED1_ON, LED2_ON, LED3_ON, LED4_ON;	//all on for 250ms.
+		_delay_ms(250);
+		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
+	}
 }
 
 ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and then set flag that button has been pushed.
