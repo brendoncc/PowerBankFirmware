@@ -10,11 +10,11 @@
 #include "USI_TWI_Master.h"
 
 /* Global Variables */
-int battCharging = 0;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
+int battCharging = 1;		//used to detect if battery is charging. Based on i2c from lipo charger. Changes function of user button.
 int chargerError = 0;		//read from i2c whether charger is in fault. LEDS will flash if fault occurs.
-double battPercentage = 0;	//calculated from analog.
-double battCurrent = 0;
-volatile int ledCount = 0;
+double battPercentage = 80;	//calculated from analog.
+double battCurrent = 0.5;
+volatile int ledCount = 0; 
 int buttonFlag = 0;
 int flashDelay = 0;
 
@@ -24,7 +24,7 @@ int main(void)
 
 	while(1)
 	{
-		battPercentage = (((ADCW*(5/1024))-3.5)/0.7)*100;	//ADCW holds full 10 bit result from ADCH and ADCL registers.
+		//battPercentage = (((ADCW*(5/1024))-3.5)/0.7)*100;	//ADCW holds full 10 bit result from ADCH and ADCL registers.
 															//4.2V = 100%, 3.5V = 0%. Making linear approximation of V vs Charge relationship. 3.5V min due to LDO cutoffs.
 		if (battPercentage < 5)
 		{
@@ -52,31 +52,30 @@ int main(void)
 
 void ButtonAction(void) //Determines short or long button press after interrupt and acts accordingly.
 {
-	int count = 0;
+	TIMSK1 = 0b00000000;		//Disable timer interrupt. Pause timer for LED status
+	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 
-	while(BUTTON_PRESSED && count < 200)	//kick out of loop if held longer than 2s
+	if (1) //press between 100 and 800ms is considered short.
 	{
-		count++;
-		_delay_ms(10);
-	}
-
-	if (count > 10 && count < 80) //press between 100 and 800ms is considered short.
-	{
+		_delay_ms(330);
+		LED1_ON;
+		_delay_ms(330);
+		LED1_OFF;
+		_delay_ms(330);
 		//short button press shows voltage when not charging.
-		FlashLEDs(1);	//flash LEDs once to indicate short press.
-		if (battPercentage >= 75)
+		if (battPercentage >= 85)
 		{
 			LED1_ON, LED2_ON, LED3_ON, LED4_ON;
 		}
-		else if (battPercentage >= 50)
+		else if (battPercentage >= 60)
 		{
 			LED1_ON, LED2_ON, LED3_ON;
 		}
-		else if (battPercentage >= 25)
+		else if (battPercentage >= 35)
 		{
 			LED1_ON, LED2_ON;
 		}
-		else if (battPercentage > 0)
+		else if (battPercentage >= 10)
 		{
 			LED1_ON;
 		}
@@ -86,10 +85,14 @@ void ButtonAction(void) //Determines short or long button press after interrupt 
 		_delay_ms(2000);
 		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 	}
-	else if (count >= 80) // press longer than 800ms is considered long.
+	else if (0) // press longer than 800ms is considered long.
 	{
+		_delay_ms(330);
+		LED2_ON;
+		_delay_ms(330);
+		LED2_OFF;
+		_delay_ms(330);
 		//long button press shows battery current.
-		FlashLEDs(2);	//flash twice to indicate long press.
 		if (battCurrent >= 3)
 		{
 			LED1_ON, LED2_ON, LED3_ON, LED4_ON;
@@ -115,20 +118,10 @@ void ButtonAction(void) //Determines short or long button press after interrupt 
 	}
 	else //Do nothing if button press is less than 100ms or other state.
 	{
-		return;
 	}
-}
+	ledCount = 0;	//reset timer LED so we dont start halfway through cycle
+	TIMSK1 = 0b00000010;		//Resume timer after LED status
 
-void FlashLEDs(int numFlashes)
-{
-	for (int i = 0; i < numFlashes; i++)
-	{
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
-		_delay_ms(250);
-		LED1_ON, LED2_ON, LED3_ON, LED4_ON;	//all on for 250ms.
-		_delay_ms(250);
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
-	}
 }
 
 ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and then set flag that button has been pushed.
@@ -180,7 +173,7 @@ void Setup(void)
 
 	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
 	TCCR1B = 0b00001100;	//prescaler 256 and CTC mode
-	OCR1A = 15625;			//Max of 65535, ** T_int = (1Mhz/256)/OCR1A = 0.25s **
+	OCR1A = 15625/8;			//Max of 65535, ** T_int = (1Mhz/256)/OCR1A = 0.25s **
 	TIMSK1 = 0b00000010;		//Generate interrupt on compare match of OCR1A(TCNT1)
 
 	sei();					//global interrupts enabled
