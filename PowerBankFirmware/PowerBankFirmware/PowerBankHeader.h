@@ -3,13 +3,14 @@
 *
 * Description: Contains all definitions and header files required for Power Bank Firmware
 * Created: 14/08/2020 1:42:05 PM
-* Author : ABJ
+* Author : 
 */
 
 /* Header Includes and Clock Speed Defines */
 #define  F_CPU 1000000UL	//1 MHz clock for compatibility with I2C library
 #include <avr/io.h> //io header
 #include <avr/interrupt.h> //interrupt header
+#include <avr/sleep.h>
 #include <util/delay.h> //delay header
 
 /* 
@@ -29,7 +30,26 @@
 *
 */
 
-/* Defines for IO */
+/* Pinout for AT Tiny 44A
+* PA0/ADC0 = Vbat Analog
+* PA1/PCINT1 = Interrupt from Lipo Charger
+* PA2 = LED1
+* PA3 = LED2
+* PA4 = SCK/SCL (ISP / i2c Lipo Charger)
+* PA5 = MISO (ISP)
+* PA6 = MOSI/SDA (ISP / i2c Lipo Charger)
+* PA7 = LED3
+* PB0 = LED4
+* PB1 = Not Used
+* PB2/INT0 = Button
+* PB3 = Reset (ISP)
+*/
+
+/* Defines for IO - I2C Pins are defined in USI_TWI_Master.h */ 
+#define CHARGER_INT PCINT1
+#define BUTTON_PRESSED !(PINB &= (1<<2))	//Read active low button press
+
+
 #define LED4_ON (PORTA |= (1<<2))		//Set PA2 High
 #define LED3_ON (PORTA |= (1<<3))		//Set PA3 High
 #define LED2_ON (PORTA |= (1<<7))		//Set PA7 High
@@ -45,27 +65,6 @@
 #define LED2_TOGGLE (PORTA ^= (1<<7))		//Set PA7 Low
 #define LED1_TOGGLE (PORTB ^= (1<<0))
 
-
-#define BUTTON_PRESSED !(PINB &= (1<<2))	//Read active low button press
-
-/* Defines for I2C Communication */
-#define PORT_ADDR  0x27	//i2c address of LCD for testing
-#define MESSAGEBUF_SIZE 4	//size of buffer for storing i2c read/write data.
-
-/* Pinout for AT Tiny 44A
-* PA0/ADC0 = Vbat Analog
-* PA1/PCINT1 = Interrupt from Lipo Charger
-* PA2 = LED1
-* PA3 = LED2
-* PA4 = SCK/SCL (ISP / i2c Lipo Charger)
-* PA5 = MISO (ISP)
-* PA6 = MOSI/SDA (ISP / i2c Lipo Charger)
-* PA7 = LED3
-* PB0 = LED4
-* PB1 = Not Used
-* PB2/INT0 = Button
-* PB3 = Reset (ISP)
-*/
 
 /* Function Prototypes */
 void Setup(void);

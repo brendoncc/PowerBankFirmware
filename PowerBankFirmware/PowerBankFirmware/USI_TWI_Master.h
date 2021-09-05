@@ -54,8 +54,8 @@ Bit and byte definitions
 
 // Device Dependant defines - These for ATtiny2313.
 #define DDR_USI             DDRA
-#define PORT_USI            PORTB
-#define PIN_USI             PINB
+#define PORT_USI            PORTA
+#define PIN_USI             PINA
 #define PORT_USI_SDA        PORTA6
 #define PORT_USI_SCL        PORTA4
 #define PIN_USI_SDA         PINA6

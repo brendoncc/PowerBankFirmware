@@ -3,53 +3,53 @@ PowerBankFirmware.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000322  00000000  00000000  00000094  2**1
+  0 .text         000003be  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000004  00800060  00000322  000003b6  2**0
+  1 .data         00000000  00800060  00800060  00000432  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000008  00800064  00800064  000003ba  2**0
+  2 .bss          0000000a  00800060  00800060  00000432  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000003ba  2**0
+  3 .comment      00000030  00000000  00000000  00000432  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000003ec  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000464  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000a0  00000000  00000000  00000428  2**0
+  5 .debug_aranges 00000098  00000000  00000000  000004a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000cb3  00000000  00000000  000004c8  2**0
+  6 .debug_info   00000bc5  00000000  00000000  00000538  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000796  00000000  00000000  0000117b  2**0
+  7 .debug_abbrev 00000765  00000000  00000000  000010fd  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000808  00000000  00000000  00001911  2**0
+  8 .debug_line   000007b9  00000000  00000000  00001862  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000180  00000000  00000000  0000211c  2**2
+  9 .debug_frame  000001a4  00000000  00000000  0000201c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000535  00000000  00000000  0000229c  2**0
+ 10 .debug_str    00000505  00000000  00000000  000021c0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000432  00000000  00000000  000027d1  2**0
+ 11 .debug_loc    00000400  00000000  00000000  000026c5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000080  00000000  00000000  00002c03  2**0
+ 12 .debug_ranges 00000078  00000000  00000000  00002ac5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
-   2:	c5 c0       	rjmp	.+394    	; 0x18e <__vector_1>
-   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
-   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
-   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
-   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
-   c:	d4 c0       	rjmp	.+424    	; 0x1b6 <__vector_6>
-   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
-  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
-  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
-  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
-  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
-  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
-  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
-  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
-  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
-  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+   2:	87 c0       	rjmp	.+270    	; 0x112 <__vector_1>
+   4:	1e c0       	rjmp	.+60     	; 0x42 <__bad_interrupt>
+   6:	1d c0       	rjmp	.+58     	; 0x42 <__bad_interrupt>
+   8:	1c c0       	rjmp	.+56     	; 0x42 <__bad_interrupt>
+   a:	1b c0       	rjmp	.+54     	; 0x42 <__bad_interrupt>
+   c:	96 c0       	rjmp	.+300    	; 0x13a <__vector_6>
+   e:	19 c0       	rjmp	.+50     	; 0x42 <__bad_interrupt>
+  10:	18 c0       	rjmp	.+48     	; 0x42 <__bad_interrupt>
+  12:	17 c0       	rjmp	.+46     	; 0x42 <__bad_interrupt>
+  14:	16 c0       	rjmp	.+44     	; 0x42 <__bad_interrupt>
+  16:	15 c0       	rjmp	.+42     	; 0x42 <__bad_interrupt>
+  18:	14 c0       	rjmp	.+40     	; 0x42 <__bad_interrupt>
+  1a:	13 c0       	rjmp	.+38     	; 0x42 <__bad_interrupt>
+  1c:	12 c0       	rjmp	.+36     	; 0x42 <__bad_interrupt>
+  1e:	11 c0       	rjmp	.+34     	; 0x42 <__bad_interrupt>
+  20:	10 c0       	rjmp	.+32     	; 0x42 <__bad_interrupt>
 
 00000022 <__ctors_end>:
   22:	11 24       	eor	r1, r1
@@ -59,559 +59,603 @@ Disassembly of section .text:
   2a:	de bf       	out	0x3e, r29	; 62
   2c:	cd bf       	out	0x3d, r28	; 61
 
-0000002e <__do_copy_data>:
-  2e:	10 e0       	ldi	r17, 0x00	; 0
+0000002e <__do_clear_bss>:
+  2e:	20 e0       	ldi	r18, 0x00	; 0
   30:	a0 e6       	ldi	r26, 0x60	; 96
   32:	b0 e0       	ldi	r27, 0x00	; 0
-  34:	e2 e2       	ldi	r30, 0x22	; 34
-  36:	f3 e0       	ldi	r31, 0x03	; 3
-  38:	02 c0       	rjmp	.+4      	; 0x3e <__SP_H__>
-  3a:	05 90       	lpm	r0, Z+
-  3c:	0d 92       	st	X+, r0
-  3e:	a4 36       	cpi	r26, 0x64	; 100
-  40:	b1 07       	cpc	r27, r17
-  42:	d9 f7       	brne	.-10     	; 0x3a <__do_copy_data+0xc>
+  34:	01 c0       	rjmp	.+2      	; 0x38 <.do_clear_bss_start>
 
-00000044 <__do_clear_bss>:
-  44:	20 e0       	ldi	r18, 0x00	; 0
-  46:	a4 e6       	ldi	r26, 0x64	; 100
-  48:	b0 e0       	ldi	r27, 0x00	; 0
-  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+00000036 <.do_clear_bss_loop>:
+  36:	1d 92       	st	X+, r1
 
-0000004c <.do_clear_bss_loop>:
-  4c:	1d 92       	st	X+, r1
+00000038 <.do_clear_bss_start>:
+  38:	aa 36       	cpi	r26, 0x6A	; 106
+  3a:	b2 07       	cpc	r27, r18
+  3c:	e1 f7       	brne	.-8      	; 0x36 <.do_clear_bss_loop>
+  3e:	20 d1       	rcall	.+576    	; 0x280 <main>
+  40:	bc c1       	rjmp	.+888    	; 0x3ba <_exit>
 
-0000004e <.do_clear_bss_start>:
-  4e:	ac 36       	cpi	r26, 0x6C	; 108
-  50:	b2 07       	cpc	r27, r18
-  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
-  54:	10 d1       	rcall	.+544    	; 0x276 <main>
-  56:	63 c1       	rjmp	.+710    	; 0x31e <_exit>
+00000042 <__bad_interrupt>:
+  42:	de cf       	rjmp	.-68     	; 0x0 <__vectors>
 
-00000058 <__bad_interrupt>:
-  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
-
-0000005a <ButtonAction>:
+00000044 <ButtonAction>:
 		//READ I2C and Update Variables Accordingly.
 	}
 }
 
 void ButtonAction(void) //Determines short or long button press after interrupt and acts accordingly.
 {
-  5a:	cf 92       	push	r12
-  5c:	df 92       	push	r13
-  5e:	ef 92       	push	r14
-  60:	ff 92       	push	r15
-	TIMSK1 = 0b00000000;		//Pause timer for LED status
-  62:	1c b8       	out	0x0c, r1	; 12
+  44:	cf 92       	push	r12
+  46:	df 92       	push	r13
+  48:	ef 92       	push	r14
+  4a:	ff 92       	push	r15
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
-  64:	c0 98       	cbi	0x18, 0	; 24
-  66:	df 98       	cbi	0x1b, 7	; 27
-  68:	db 98       	cbi	0x1b, 3	; 27
-  6a:	da 98       	cbi	0x1b, 2	; 27
+  4c:	c0 98       	cbi	0x18, 0	; 24
+  4e:	df 98       	cbi	0x1b, 7	; 27
+  50:	db 98       	cbi	0x1b, 3	; 27
+  52:	da 98       	cbi	0x1b, 2	; 27
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  6c:	2f ec       	ldi	r18, 0xCF	; 207
-  6e:	81 e0       	ldi	r24, 0x01	; 1
-  70:	91 e0       	ldi	r25, 0x01	; 1
-  72:	21 50       	subi	r18, 0x01	; 1
-  74:	80 40       	sbci	r24, 0x00	; 0
-  76:	90 40       	sbci	r25, 0x00	; 0
-  78:	e1 f7       	brne	.-8      	; 0x72 <ButtonAction+0x18>
-  7a:	00 c0       	rjmp	.+0      	; 0x7c <ButtonAction+0x22>
-  7c:	00 00       	nop
+  54:	8f e4       	ldi	r24, 0x4F	; 79
+  56:	93 ec       	ldi	r25, 0xC3	; 195
+  58:	01 97       	sbiw	r24, 0x01	; 1
+  5a:	f1 f7       	brne	.-4      	; 0x58 <ButtonAction+0x14>
+  5c:	00 c0       	rjmp	.+0      	; 0x5e <ButtonAction+0x1a>
+  5e:	00 00       	nop
 
 	if (1) //press between 100 and 800ms is considered short.
 	{
-		_delay_ms(330);
+		_delay_ms(200);
 		LED1_ON;
-  7e:	c0 9a       	sbi	0x18, 0	; 24
-  80:	2f ec       	ldi	r18, 0xCF	; 207
-  82:	81 e0       	ldi	r24, 0x01	; 1
-  84:	91 e0       	ldi	r25, 0x01	; 1
-  86:	21 50       	subi	r18, 0x01	; 1
-  88:	80 40       	sbci	r24, 0x00	; 0
-  8a:	90 40       	sbci	r25, 0x00	; 0
-  8c:	e1 f7       	brne	.-8      	; 0x86 <ButtonAction+0x2c>
-  8e:	00 c0       	rjmp	.+0      	; 0x90 <ButtonAction+0x36>
-  90:	00 00       	nop
-		_delay_ms(330);
+  60:	c0 9a       	sbi	0x18, 0	; 24
+  62:	8f e4       	ldi	r24, 0x4F	; 79
+  64:	93 ec       	ldi	r25, 0xC3	; 195
+  66:	01 97       	sbiw	r24, 0x01	; 1
+  68:	f1 f7       	brne	.-4      	; 0x66 <ButtonAction+0x22>
+  6a:	00 c0       	rjmp	.+0      	; 0x6c <ButtonAction+0x28>
+  6c:	00 00       	nop
+		_delay_ms(200);
 		LED1_OFF;
-  92:	c0 98       	cbi	0x18, 0	; 24
-  94:	2f ec       	ldi	r18, 0xCF	; 207
-  96:	81 e0       	ldi	r24, 0x01	; 1
-  98:	91 e0       	ldi	r25, 0x01	; 1
-  9a:	21 50       	subi	r18, 0x01	; 1
-  9c:	80 40       	sbci	r24, 0x00	; 0
-  9e:	90 40       	sbci	r25, 0x00	; 0
-  a0:	e1 f7       	brne	.-8      	; 0x9a <ButtonAction+0x40>
-  a2:	00 c0       	rjmp	.+0      	; 0xa4 <ButtonAction+0x4a>
-  a4:	00 00       	nop
-		_delay_ms(330);
+  6e:	c0 98       	cbi	0x18, 0	; 24
+  70:	8f e4       	ldi	r24, 0x4F	; 79
+  72:	93 ec       	ldi	r25, 0xC3	; 195
+  74:	01 97       	sbiw	r24, 0x01	; 1
+  76:	f1 f7       	brne	.-4      	; 0x74 <ButtonAction+0x30>
+  78:	00 c0       	rjmp	.+0      	; 0x7a <ButtonAction+0x36>
+  7a:	00 00       	nop
+		_delay_ms(200);
 		//short button press shows voltage when not charging.
-		if (battPercentage >= 85)
-  a6:	c0 90 68 00 	lds	r12, 0x0068	; 0x800068 <battPercentage>
-  aa:	d0 90 69 00 	lds	r13, 0x0069	; 0x800069 <battPercentage+0x1>
-  ae:	e0 90 6a 00 	lds	r14, 0x006A	; 0x80006a <battPercentage+0x2>
-  b2:	f0 90 6b 00 	lds	r15, 0x006B	; 0x80006b <battPercentage+0x3>
-  b6:	20 e0       	ldi	r18, 0x00	; 0
-  b8:	30 e0       	ldi	r19, 0x00	; 0
-  ba:	4a ea       	ldi	r20, 0xAA	; 170
-  bc:	52 e4       	ldi	r21, 0x42	; 66
-  be:	c7 01       	movw	r24, r14
-  c0:	b6 01       	movw	r22, r12
-  c2:	05 d1       	rcall	.+522    	; 0x2ce <__gesf2>
-  c4:	88 23       	and	r24, r24
-  c6:	2c f0       	brlt	.+10     	; 0xd2 <ButtonAction+0x78>
+		if (battVoltage >= 4.1)
+  7c:	c0 90 66 00 	lds	r12, 0x0066	; 0x800066 <battVoltage>
+  80:	d0 90 67 00 	lds	r13, 0x0067	; 0x800067 <battVoltage+0x1>
+  84:	e0 90 68 00 	lds	r14, 0x0068	; 0x800068 <battVoltage+0x2>
+  88:	f0 90 69 00 	lds	r15, 0x0069	; 0x800069 <battVoltage+0x3>
+  8c:	23 e3       	ldi	r18, 0x33	; 51
+  8e:	33 e3       	ldi	r19, 0x33	; 51
+  90:	43 e8       	ldi	r20, 0x83	; 131
+  92:	50 e4       	ldi	r21, 0x40	; 64
+  94:	c7 01       	movw	r24, r14
+  96:	b6 01       	movw	r22, r12
+  98:	68 d1       	rcall	.+720    	; 0x36a <__gesf2>
+  9a:	88 23       	and	r24, r24
+  9c:	2c f0       	brlt	.+10     	; 0xa8 <ButtonAction+0x64>
 		{
-			LED1_ON, LED2_ON, LED3_ON, LED4_ON;
-  c8:	c0 9a       	sbi	0x18, 0	; 24
-  ca:	df 9a       	sbi	0x1b, 7	; 27
-  cc:	db 9a       	sbi	0x1b, 3	; 27
-  ce:	da 9a       	sbi	0x1b, 2	; 27
-  d0:	23 c0       	rjmp	.+70     	; 0x118 <ButtonAction+0xbe>
+			LED1_ON, LED2_ON, LED3_ON, LED4_ON; //4 LEDS on above 85%
+  9e:	c0 9a       	sbi	0x18, 0	; 24
+  a0:	df 9a       	sbi	0x1b, 7	; 27
+  a2:	db 9a       	sbi	0x1b, 3	; 27
+  a4:	da 9a       	sbi	0x1b, 2	; 27
+  a6:	23 c0       	rjmp	.+70     	; 0xee <ButtonAction+0xaa>
 		}
-		else if (battPercentage >= 60)
-  d2:	20 e0       	ldi	r18, 0x00	; 0
-  d4:	30 e0       	ldi	r19, 0x00	; 0
-  d6:	40 e7       	ldi	r20, 0x70	; 112
-  d8:	52 e4       	ldi	r21, 0x42	; 66
-  da:	c7 01       	movw	r24, r14
-  dc:	b6 01       	movw	r22, r12
-  de:	f7 d0       	rcall	.+494    	; 0x2ce <__gesf2>
-  e0:	88 23       	and	r24, r24
-  e2:	24 f0       	brlt	.+8      	; 0xec <ButtonAction+0x92>
+		else if (battVoltage >= 3.9) 
+  a8:	2a e9       	ldi	r18, 0x9A	; 154
+  aa:	39 e9       	ldi	r19, 0x99	; 153
+  ac:	49 e7       	ldi	r20, 0x79	; 121
+  ae:	50 e4       	ldi	r21, 0x40	; 64
+  b0:	c7 01       	movw	r24, r14
+  b2:	b6 01       	movw	r22, r12
+  b4:	5a d1       	rcall	.+692    	; 0x36a <__gesf2>
+  b6:	88 23       	and	r24, r24
+  b8:	24 f0       	brlt	.+8      	; 0xc2 <ButtonAction+0x7e>
 		{
-			LED1_ON, LED2_ON, LED3_ON;
-  e4:	c0 9a       	sbi	0x18, 0	; 24
-  e6:	df 9a       	sbi	0x1b, 7	; 27
-  e8:	db 9a       	sbi	0x1b, 3	; 27
-  ea:	16 c0       	rjmp	.+44     	; 0x118 <ButtonAction+0xbe>
+			LED1_ON, LED2_ON, LED3_ON; //3 LEDS on between 55% and 84%
+  ba:	c0 9a       	sbi	0x18, 0	; 24
+  bc:	df 9a       	sbi	0x1b, 7	; 27
+  be:	db 9a       	sbi	0x1b, 3	; 27
+  c0:	16 c0       	rjmp	.+44     	; 0xee <ButtonAction+0xaa>
 		}
-		else if (battPercentage >= 35)
-  ec:	20 e0       	ldi	r18, 0x00	; 0
-  ee:	30 e0       	ldi	r19, 0x00	; 0
-  f0:	4c e0       	ldi	r20, 0x0C	; 12
-  f2:	52 e4       	ldi	r21, 0x42	; 66
-  f4:	c7 01       	movw	r24, r14
-  f6:	b6 01       	movw	r22, r12
-  f8:	ea d0       	rcall	.+468    	; 0x2ce <__gesf2>
-  fa:	88 23       	and	r24, r24
-  fc:	1c f0       	brlt	.+6      	; 0x104 <ButtonAction+0xaa>
+		else if (battVoltage >= 3.7)
+  c2:	2d ec       	ldi	r18, 0xCD	; 205
+  c4:	3c ec       	ldi	r19, 0xCC	; 204
+  c6:	4c e6       	ldi	r20, 0x6C	; 108
+  c8:	50 e4       	ldi	r21, 0x40	; 64
+  ca:	c7 01       	movw	r24, r14
+  cc:	b6 01       	movw	r22, r12
+  ce:	4d d1       	rcall	.+666    	; 0x36a <__gesf2>
+  d0:	88 23       	and	r24, r24
+  d2:	1c f0       	brlt	.+6      	; 0xda <ButtonAction+0x96>
 		{
-			LED1_ON, LED2_ON;
-  fe:	c0 9a       	sbi	0x18, 0	; 24
- 100:	df 9a       	sbi	0x1b, 7	; 27
- 102:	0a c0       	rjmp	.+20     	; 0x118 <ButtonAction+0xbe>
+			LED1_ON, LED2_ON; //2 LEDS on between 35 and 54%
+  d4:	c0 9a       	sbi	0x18, 0	; 24
+  d6:	df 9a       	sbi	0x1b, 7	; 27
+  d8:	0a c0       	rjmp	.+20     	; 0xee <ButtonAction+0xaa>
 		}
-		else if (battPercentage >= 10)
- 104:	20 e0       	ldi	r18, 0x00	; 0
- 106:	30 e0       	ldi	r19, 0x00	; 0
- 108:	40 e2       	ldi	r20, 0x20	; 32
- 10a:	51 e4       	ldi	r21, 0x41	; 65
- 10c:	c7 01       	movw	r24, r14
- 10e:	b6 01       	movw	r22, r12
- 110:	de d0       	rcall	.+444    	; 0x2ce <__gesf2>
- 112:	88 23       	and	r24, r24
- 114:	0c f0       	brlt	.+2      	; 0x118 <ButtonAction+0xbe>
+		else if (battVoltage >= 3.5)
+  da:	20 e0       	ldi	r18, 0x00	; 0
+  dc:	30 e0       	ldi	r19, 0x00	; 0
+  de:	40 e6       	ldi	r20, 0x60	; 96
+  e0:	50 e4       	ldi	r21, 0x40	; 64
+  e2:	c7 01       	movw	r24, r14
+  e4:	b6 01       	movw	r22, r12
+  e6:	41 d1       	rcall	.+642    	; 0x36a <__gesf2>
+  e8:	88 23       	and	r24, r24
+  ea:	0c f0       	brlt	.+2      	; 0xee <ButtonAction+0xaa>
 		{
-			LED1_ON;
- 116:	c0 9a       	sbi	0x18, 0	; 24
- 118:	2f e7       	ldi	r18, 0x7F	; 127
- 11a:	8a e1       	ldi	r24, 0x1A	; 26
- 11c:	96 e0       	ldi	r25, 0x06	; 6
- 11e:	21 50       	subi	r18, 0x01	; 1
- 120:	80 40       	sbci	r24, 0x00	; 0
- 122:	90 40       	sbci	r25, 0x00	; 0
- 124:	e1 f7       	brne	.-8      	; 0x11e <ButtonAction+0xc4>
- 126:	00 c0       	rjmp	.+0      	; 0x128 <ButtonAction+0xce>
- 128:	00 00       	nop
+			LED1_ON; //1 LED on between 5 and 34 %
+  ec:	c0 9a       	sbi	0x18, 0	; 24
+  ee:	9f e3       	ldi	r25, 0x3F	; 63
+  f0:	2d e0       	ldi	r18, 0x0D	; 13
+  f2:	83 e0       	ldi	r24, 0x03	; 3
+  f4:	91 50       	subi	r25, 0x01	; 1
+  f6:	20 40       	sbci	r18, 0x00	; 0
+  f8:	80 40       	sbci	r24, 0x00	; 0
+  fa:	e1 f7       	brne	.-8      	; 0xf4 <ButtonAction+0xb0>
+  fc:	00 c0       	rjmp	.+0      	; 0xfe <ButtonAction+0xba>
+  fe:	00 00       	nop
 		}
 		else
 		{ 
 		}
-		_delay_ms(2000);
+		_delay_ms(1000);
 		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
- 12a:	c0 98       	cbi	0x18, 0	; 24
- 12c:	df 98       	cbi	0x1b, 7	; 27
- 12e:	db 98       	cbi	0x1b, 3	; 27
- 130:	da 98       	cbi	0x1b, 2	; 27
+ 100:	c0 98       	cbi	0x18, 0	; 24
+ 102:	df 98       	cbi	0x1b, 7	; 27
+ 104:	db 98       	cbi	0x1b, 3	; 27
+ 106:	da 98       	cbi	0x1b, 2	; 27
 		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 	}
 	else //Do nothing if button press is less than 100ms or other state.
 	{
 	}
-	ledCount = 0;	//reset timer LED so we dont start halfway through cycle
- 132:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <ledCount+0x1>
- 136:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <ledCount>
-	TIMSK1 = 0b00000010;		//Resume timer after LED status
- 13a:	82 e0       	ldi	r24, 0x02	; 2
- 13c:	8c b9       	out	0x0c, r24	; 12
-
 }
- 13e:	ff 90       	pop	r15
- 140:	ef 90       	pop	r14
- 142:	df 90       	pop	r13
- 144:	cf 90       	pop	r12
- 146:	08 95       	ret
+ 108:	ff 90       	pop	r15
+ 10a:	ef 90       	pop	r14
+ 10c:	df 90       	pop	r13
+ 10e:	cf 90       	pop	r12
+ 110:	08 95       	ret
 
-00000148 <FlashLEDs>:
-
-void FlashLEDs(int numFlashes)
-{
-	for (int i = 0; i < numFlashes; i++)
- 148:	18 16       	cp	r1, r24
- 14a:	19 06       	cpc	r1, r25
- 14c:	fc f4       	brge	.+62     	; 0x18c <__stack+0x2d>
- 14e:	20 e0       	ldi	r18, 0x00	; 0
- 150:	30 e0       	ldi	r19, 0x00	; 0
-	{
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
- 152:	c0 98       	cbi	0x18, 0	; 24
- 154:	df 98       	cbi	0x1b, 7	; 27
- 156:	db 98       	cbi	0x1b, 3	; 27
- 158:	da 98       	cbi	0x1b, 2	; 27
- 15a:	e3 e2       	ldi	r30, 0x23	; 35
- 15c:	f4 ef       	ldi	r31, 0xF4	; 244
- 15e:	31 97       	sbiw	r30, 0x01	; 1
- 160:	f1 f7       	brne	.-4      	; 0x15e <FlashLEDs+0x16>
- 162:	00 c0       	rjmp	.+0      	; 0x164 <__stack+0x5>
- 164:	00 00       	nop
-		_delay_ms(250);
-		LED1_ON, LED2_ON, LED3_ON, LED4_ON;	//all on for 250ms.
- 166:	c0 9a       	sbi	0x18, 0	; 24
- 168:	df 9a       	sbi	0x1b, 7	; 27
- 16a:	db 9a       	sbi	0x1b, 3	; 27
- 16c:	da 9a       	sbi	0x1b, 2	; 27
- 16e:	e3 e2       	ldi	r30, 0x23	; 35
- 170:	f4 ef       	ldi	r31, 0xF4	; 244
- 172:	31 97       	sbiw	r30, 0x01	; 1
- 174:	f1 f7       	brne	.-4      	; 0x172 <__stack+0x13>
- 176:	00 c0       	rjmp	.+0      	; 0x178 <__stack+0x19>
- 178:	00 00       	nop
-		_delay_ms(250);
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
- 17a:	c0 98       	cbi	0x18, 0	; 24
- 17c:	df 98       	cbi	0x1b, 7	; 27
- 17e:	db 98       	cbi	0x1b, 3	; 27
- 180:	da 98       	cbi	0x1b, 2	; 27
-
-}
-
-void FlashLEDs(int numFlashes)
-{
-	for (int i = 0; i < numFlashes; i++)
- 182:	2f 5f       	subi	r18, 0xFF	; 255
- 184:	3f 4f       	sbci	r19, 0xFF	; 255
- 186:	28 17       	cp	r18, r24
- 188:	39 07       	cpc	r19, r25
- 18a:	19 f7       	brne	.-58     	; 0x152 <FlashLEDs+0xa>
- 18c:	08 95       	ret
-
-0000018e <__vector_1>:
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;	//all off for 250ms.
-	}
-}
+00000112 <__vector_1>:
 
 ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and then set flag that button has been pushed.
 {
- 18e:	1f 92       	push	r1
- 190:	0f 92       	push	r0
- 192:	0f b6       	in	r0, 0x3f	; 63
- 194:	0f 92       	push	r0
- 196:	11 24       	eor	r1, r1
- 198:	8f 93       	push	r24
- 19a:	9f 93       	push	r25
+ 112:	1f 92       	push	r1
+ 114:	0f 92       	push	r0
+ 116:	0f b6       	in	r0, 0x3f	; 63
+ 118:	0f 92       	push	r0
+ 11a:	11 24       	eor	r1, r1
+ 11c:	8f 93       	push	r24
+ 11e:	9f 93       	push	r25
 	buttonFlag = 1;
- 19c:	81 e0       	ldi	r24, 0x01	; 1
- 19e:	90 e0       	ldi	r25, 0x00	; 0
- 1a0:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <__data_end+0x1>
- 1a4:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__data_end>
+ 120:	81 e0       	ldi	r24, 0x01	; 1
+ 122:	90 e0       	ldi	r25, 0x00	; 0
+ 124:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <buttonFlag+0x1>
+ 128:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <buttonFlag>
 }
- 1a8:	9f 91       	pop	r25
- 1aa:	8f 91       	pop	r24
- 1ac:	0f 90       	pop	r0
- 1ae:	0f be       	out	0x3f, r0	; 63
- 1b0:	0f 90       	pop	r0
- 1b2:	1f 90       	pop	r1
- 1b4:	18 95       	reti
+ 12c:	9f 91       	pop	r25
+ 12e:	8f 91       	pop	r24
+ 130:	0f 90       	pop	r0
+ 132:	0f be       	out	0x3f, r0	; 63
+ 134:	0f 90       	pop	r0
+ 136:	1f 90       	pop	r1
+ 138:	18 95       	reti
 
-000001b6 <__vector_6>:
+0000013a <__vector_6>:
 
 ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging.
 {
- 1b6:	1f 92       	push	r1
- 1b8:	0f 92       	push	r0
- 1ba:	0f b6       	in	r0, 0x3f	; 63
- 1bc:	0f 92       	push	r0
- 1be:	11 24       	eor	r1, r1
- 1c0:	8f 93       	push	r24
- 1c2:	9f 93       	push	r25
-	if (ledCount == 1)
- 1c4:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <ledCount>
- 1c8:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <ledCount+0x1>
- 1cc:	01 97       	sbiw	r24, 0x01	; 1
- 1ce:	11 f4       	brne	.+4      	; 0x1d4 <__vector_6+0x1e>
-	{
-		LED1_ON;
- 1d0:	c0 9a       	sbi	0x18, 0	; 24
- 1d2:	17 c0       	rjmp	.+46     	; 0x202 <__vector_6+0x4c>
-	}
-	else if (ledCount == 2)
- 1d4:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <ledCount>
- 1d8:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <ledCount+0x1>
- 1dc:	02 97       	sbiw	r24, 0x02	; 2
- 1de:	11 f4       	brne	.+4      	; 0x1e4 <__vector_6+0x2e>
-	{
-		LED2_ON;
- 1e0:	df 9a       	sbi	0x1b, 7	; 27
- 1e2:	0f c0       	rjmp	.+30     	; 0x202 <__vector_6+0x4c>
-	}
-	else if (ledCount == 3)
- 1e4:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <ledCount>
- 1e8:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <ledCount+0x1>
- 1ec:	03 97       	sbiw	r24, 0x03	; 3
- 1ee:	11 f4       	brne	.+4      	; 0x1f4 <__vector_6+0x3e>
-	{
-		LED3_ON;
- 1f0:	db 9a       	sbi	0x1b, 3	; 27
- 1f2:	07 c0       	rjmp	.+14     	; 0x202 <__vector_6+0x4c>
-	}
-	else if (ledCount == 4)
- 1f4:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <ledCount>
- 1f8:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <ledCount+0x1>
- 1fc:	04 97       	sbiw	r24, 0x04	; 4
- 1fe:	09 f4       	brne	.+2      	; 0x202 <__vector_6+0x4c>
-	{
-		LED4_ON;
- 200:	da 9a       	sbi	0x1b, 2	; 27
-	}
-	if (ledCount > 4)
- 202:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <ledCount>
- 206:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <ledCount+0x1>
- 20a:	05 97       	sbiw	r24, 0x05	; 5
- 20c:	44 f0       	brlt	.+16     	; 0x21e <__vector_6+0x68>
-	{
-		ledCount = 0;
- 20e:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <ledCount+0x1>
- 212:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <ledCount>
-		LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
- 216:	c0 98       	cbi	0x18, 0	; 24
- 218:	df 98       	cbi	0x1b, 7	; 27
- 21a:	db 98       	cbi	0x1b, 3	; 27
- 21c:	da 98       	cbi	0x1b, 2	; 27
-	}
-	ledCount++;
- 21e:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <ledCount>
- 222:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <ledCount+0x1>
- 226:	01 96       	adiw	r24, 0x01	; 1
- 228:	90 93 67 00 	sts	0x0067, r25	; 0x800067 <ledCount+0x1>
- 22c:	80 93 66 00 	sts	0x0066, r24	; 0x800066 <ledCount>
+ 13a:	1f 92       	push	r1
+ 13c:	0f 92       	push	r0
+ 13e:	0f b6       	in	r0, 0x3f	; 63
+ 140:	0f 92       	push	r0
+ 142:	11 24       	eor	r1, r1
+ 144:	2f 93       	push	r18
+ 146:	3f 93       	push	r19
+ 148:	4f 93       	push	r20
+ 14a:	5f 93       	push	r21
+ 14c:	6f 93       	push	r22
+ 14e:	7f 93       	push	r23
+ 150:	8f 93       	push	r24
+ 152:	9f 93       	push	r25
+ 154:	af 93       	push	r26
+ 156:	bf 93       	push	r27
+ 158:	ef 93       	push	r30
+ 15a:	ff 93       	push	r31
+		if (ledCount == 1)
+ 15c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 160:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 164:	01 97       	sbiw	r24, 0x01	; 1
+ 166:	11 f4       	brne	.+4      	; 0x16c <__stack+0xd>
+		{
+			LED1_ON;
+ 168:	c0 9a       	sbi	0x18, 0	; 24
+ 16a:	44 c0       	rjmp	.+136    	; 0x1f4 <__stack+0x95>
+		}
+		else if (ledCount == 2 && battVoltage >= 3.7)
+ 16c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 170:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 174:	02 97       	sbiw	r24, 0x02	; 2
+ 176:	89 f4       	brne	.+34     	; 0x19a <__stack+0x3b>
+ 178:	2d ec       	ldi	r18, 0xCD	; 205
+ 17a:	3c ec       	ldi	r19, 0xCC	; 204
+ 17c:	4c e6       	ldi	r20, 0x6C	; 108
+ 17e:	50 e4       	ldi	r21, 0x40	; 64
+ 180:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <battVoltage>
+ 184:	70 91 67 00 	lds	r23, 0x0067	; 0x800067 <battVoltage+0x1>
+ 188:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <battVoltage+0x2>
+ 18c:	90 91 69 00 	lds	r25, 0x0069	; 0x800069 <battVoltage+0x3>
+ 190:	ec d0       	rcall	.+472    	; 0x36a <__gesf2>
+ 192:	88 23       	and	r24, r24
+ 194:	14 f0       	brlt	.+4      	; 0x19a <__stack+0x3b>
+		{
+			LED2_ON;
+ 196:	df 9a       	sbi	0x1b, 7	; 27
+ 198:	2d c0       	rjmp	.+90     	; 0x1f4 <__stack+0x95>
+		}
+		else if (ledCount == 3 && battVoltage >= 3.9)
+ 19a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 19e:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 1a2:	03 97       	sbiw	r24, 0x03	; 3
+ 1a4:	89 f4       	brne	.+34     	; 0x1c8 <__stack+0x69>
+ 1a6:	2a e9       	ldi	r18, 0x9A	; 154
+ 1a8:	39 e9       	ldi	r19, 0x99	; 153
+ 1aa:	49 e7       	ldi	r20, 0x79	; 121
+ 1ac:	50 e4       	ldi	r21, 0x40	; 64
+ 1ae:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <battVoltage>
+ 1b2:	70 91 67 00 	lds	r23, 0x0067	; 0x800067 <battVoltage+0x1>
+ 1b6:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <battVoltage+0x2>
+ 1ba:	90 91 69 00 	lds	r25, 0x0069	; 0x800069 <battVoltage+0x3>
+ 1be:	d5 d0       	rcall	.+426    	; 0x36a <__gesf2>
+ 1c0:	88 23       	and	r24, r24
+ 1c2:	14 f0       	brlt	.+4      	; 0x1c8 <__stack+0x69>
+		{
+			LED3_ON;
+ 1c4:	db 9a       	sbi	0x1b, 3	; 27
+ 1c6:	16 c0       	rjmp	.+44     	; 0x1f4 <__stack+0x95>
+		}
+		else if (ledCount == 4 && battVoltage >= 4.1)
+ 1c8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 1cc:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 1d0:	04 97       	sbiw	r24, 0x04	; 4
+ 1d2:	81 f4       	brne	.+32     	; 0x1f4 <__stack+0x95>
+ 1d4:	23 e3       	ldi	r18, 0x33	; 51
+ 1d6:	33 e3       	ldi	r19, 0x33	; 51
+ 1d8:	43 e8       	ldi	r20, 0x83	; 131
+ 1da:	50 e4       	ldi	r21, 0x40	; 64
+ 1dc:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <battVoltage>
+ 1e0:	70 91 67 00 	lds	r23, 0x0067	; 0x800067 <battVoltage+0x1>
+ 1e4:	80 91 68 00 	lds	r24, 0x0068	; 0x800068 <battVoltage+0x2>
+ 1e8:	90 91 69 00 	lds	r25, 0x0069	; 0x800069 <battVoltage+0x3>
+ 1ec:	be d0       	rcall	.+380    	; 0x36a <__gesf2>
+ 1ee:	88 23       	and	r24, r24
+ 1f0:	0c f0       	brlt	.+2      	; 0x1f4 <__stack+0x95>
+		{
+			LED4_ON;
+ 1f2:	da 9a       	sbi	0x1b, 2	; 27
+		}
+		if (ledCount > 4)
+ 1f4:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 1f8:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 1fc:	05 97       	sbiw	r24, 0x05	; 5
+ 1fe:	44 f0       	brlt	.+16     	; 0x210 <__stack+0xb1>
+		{
+			ledCount = 0;
+ 200:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <_edata+0x1>
+ 204:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <_edata>
+			LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
+ 208:	c0 98       	cbi	0x18, 0	; 24
+ 20a:	df 98       	cbi	0x1b, 7	; 27
+ 20c:	db 98       	cbi	0x1b, 3	; 27
+ 20e:	da 98       	cbi	0x1b, 2	; 27
+		}
+		ledCount++;
+ 210:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 214:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 218:	01 96       	adiw	r24, 0x01	; 1
+ 21a:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <_edata+0x1>
+ 21e:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <_edata>
 }
- 230:	9f 91       	pop	r25
- 232:	8f 91       	pop	r24
- 234:	0f 90       	pop	r0
- 236:	0f be       	out	0x3f, r0	; 63
- 238:	0f 90       	pop	r0
- 23a:	1f 90       	pop	r1
- 23c:	18 95       	reti
+ 222:	ff 91       	pop	r31
+ 224:	ef 91       	pop	r30
+ 226:	bf 91       	pop	r27
+ 228:	af 91       	pop	r26
+ 22a:	9f 91       	pop	r25
+ 22c:	8f 91       	pop	r24
+ 22e:	7f 91       	pop	r23
+ 230:	6f 91       	pop	r22
+ 232:	5f 91       	pop	r21
+ 234:	4f 91       	pop	r20
+ 236:	3f 91       	pop	r19
+ 238:	2f 91       	pop	r18
+ 23a:	0f 90       	pop	r0
+ 23c:	0f be       	out	0x3f, r0	; 63
+ 23e:	0f 90       	pop	r0
+ 240:	1f 90       	pop	r1
+ 242:	18 95       	reti
 
-0000023e <Setup>:
+00000244 <Setup>:
 
 void Setup(void)
 {
 	DDRA = 0b10001100;		//Set register A I/O Based on pin out in header file (1 output, 0 input).
- 23e:	8c e8       	ldi	r24, 0x8C	; 140
- 240:	8a bb       	out	0x1a, r24	; 26
+ 244:	8c e8       	ldi	r24, 0x8C	; 140
+ 246:	8a bb       	out	0x1a, r24	; 26
 	PORTA = 0b00000000;		//Disable pull up resistors as we have external. Set outputs to initially low. (DDR = 0, 1 enable, 0 disable, DDR = 1, 1 high, 0 low)
- 242:	1b ba       	out	0x1b, r1	; 27
+ 248:	1b ba       	out	0x1b, r1	; 27
 	DDRB = 0b00000001;		//Set register B based on pin out in header file.
- 244:	81 e0       	ldi	r24, 0x01	; 1
- 246:	87 bb       	out	0x17, r24	; 23
+ 24a:	81 e0       	ldi	r24, 0x01	; 1
+ 24c:	87 bb       	out	0x17, r24	; 23
 	PORTB = 0b00000100;		//Disable pull up resistors. Set outputs initially low.
- 248:	94 e0       	ldi	r25, 0x04	; 4
- 24a:	98 bb       	out	0x18, r25	; 24
+ 24e:	94 e0       	ldi	r25, 0x04	; 4
+ 250:	98 bb       	out	0x18, r25	; 24
 	
+	PRR = 0b00000000;		//make sure ADCs and timers are powered up
+ 252:	10 b8       	out	0x00, r1	; 0
 	ADMUX = 0b00000000;		//ADC ref is Vcc, No mux settings therefore ADC0 is used.
- 24c:	17 b8       	out	0x07, r1	; 7
+ 254:	17 b8       	out	0x07, r1	; 7
 	ADCSRA = 0b11000111;	//enable (bit 7, disable before sleep) ADC and start conversion (bit 6), 128 prescaler for ADC clock.
- 24e:	97 ec       	ldi	r25, 0xC7	; 199
- 250:	96 b9       	out	0x06, r25	; 6
-	ADCSRB = 0b00000000;	//free running mode
- 252:	13 b8       	out	0x03, r1	; 3
+ 256:	97 ec       	ldi	r25, 0xC7	; 199
+ 258:	96 b9       	out	0x06, r25	; 6
+	ADCSRB = 0b00000000;	//free running mode, left adjust result to read only ADCH 8 bit 
+ 25a:	13 b8       	out	0x03, r1	; 3
 	DIDR0 = 0b00000001;		//disable digital input buffer on ADC as recommended to reduce power consumption.
- 254:	81 b9       	out	0x01, r24	; 1
+ 25c:	81 b9       	out	0x01, r24	; 1
 	
-	MCUCR = 0b00000000;		//low level of INT0 triggers interrupt
- 256:	15 be       	out	0x35, r1	; 53
+	MCUCR = 0b00110000;		//enable sleep mode, sleep; command set to power down. Can only wake from INT0 low level.
+ 25e:	80 e3       	ldi	r24, 0x30	; 48
+ 260:	85 bf       	out	0x35, r24	; 53
 	GIMSK = 0b01010000;		//enable INT0 external interrupt and allow enabling of PC interrupts 0 to 7.
- 258:	80 e5       	ldi	r24, 0x50	; 80
- 25a:	8b bf       	out	0x3b, r24	; 59
+ 262:	80 e5       	ldi	r24, 0x50	; 80
+ 264:	8b bf       	out	0x3b, r24	; 59
 	PCMSK0 = 0b00000000;	//Set bit 1 to 1 to enable PCINT1 interrupt. All others disabled. Only needed if using Lipo charging interrupt.
- 25c:	12 ba       	out	0x12, r1	; 18
+ 266:	12 ba       	out	0x12, r1	; 18
 
 	TCCR1A = 0b00000000;	//16 bit timer in CTC mode
- 25e:	1f bc       	out	0x2f, r1	; 47
+ 268:	1f bc       	out	0x2f, r1	; 47
 	TCCR1B = 0b00001100;	//prescaler 256 and CTC mode
- 260:	8c e0       	ldi	r24, 0x0C	; 12
- 262:	8e bd       	out	0x2e, r24	; 46
-	OCR1A = 15625/8;			//Max of 65535, ** T_int = (1Mhz/256)/OCR1A = 0.25s **
- 264:	81 ea       	ldi	r24, 0xA1	; 161
- 266:	97 e0       	ldi	r25, 0x07	; 7
- 268:	9b bd       	out	0x2b, r25	; 43
- 26a:	8a bd       	out	0x2a, r24	; 42
-	TIMSK1 = 0b00000010;		//Generate interrupt on compare match of OCR1A(TCNT1)
- 26c:	82 e0       	ldi	r24, 0x02	; 2
- 26e:	8c b9       	out	0x0c, r24	; 12
+ 26a:	8c e0       	ldi	r24, 0x0C	; 12
+ 26c:	8e bd       	out	0x2e, r24	; 46
+	OCR1A = 15625/16;		//Max of 65535, ** T_int = (1Mhz/256)/OCR1A = 0.25s **
+ 26e:	80 ed       	ldi	r24, 0xD0	; 208
+ 270:	93 e0       	ldi	r25, 0x03	; 3
+ 272:	9b bd       	out	0x2b, r25	; 43
+ 274:	8a bd       	out	0x2a, r24	; 42
+	TIMSK1 = 0b00000010;	//Generate interrupt on compare match of OCR1A(TCNT1)
+ 276:	82 e0       	ldi	r24, 0x02	; 2
+ 278:	8c b9       	out	0x0c, r24	; 12
 
 	sei();					//global interrupts enabled
- 270:	78 94       	sei
+ 27a:	78 94       	sei
 
 	USI_TWI_Master_Initialise();
- 272:	22 d0       	rcall	.+68     	; 0x2b8 <USI_TWI_Master_Initialise>
- 274:	08 95       	ret
+ 27c:	2e d0       	rcall	.+92     	; 0x2da <USI_TWI_Master_Initialise>
+ 27e:	08 95       	ret
 
-00000276 <main>:
-int buttonFlag = 0;
-int flashDelay = 0;
+00000280 <main>:
+double battVoltage;	//calculated from analog.
+double battCurrent = 0;
 
 int main(void)
 {
 	Setup();
- 276:	e3 df       	rcall	.-58     	; 0x23e <Setup>
+ 280:	e1 df       	rcall	.-62     	; 0x244 <Setup>
 			buttonFlag = 0;
 		}
 
 		if (battCharging)
 		{
-			TIMSK1 = 0b00000010;		//Generate timer interrupt on compare match of OCR1A(TCNT1)
- 278:	c2 e0       	ldi	r28, 0x02	; 2
-															//4.2V = 100%, 3.5V = 0%. Making linear approximation of V vs Charge relationship. 3.5V min due to LDO cutoffs.
-		if (battPercentage < 5)
+			TIMSK1 = 0b00000010;	//Enable timer compare match that drives LED timing
+ 282:	c2 e0       	ldi	r28, 0x02	; 2
+{
+	Setup();
+
+	while(1)
+	{
+		battVoltage = ((ADCW*5)/256);	//ADCW holds full 10 bit result from ADCH and ADCL registers.
+ 284:	64 b1       	in	r22, 0x04	; 4
+ 286:	75 b1       	in	r23, 0x05	; 5
+ 288:	cb 01       	movw	r24, r22
+ 28a:	88 0f       	add	r24, r24
+ 28c:	99 1f       	adc	r25, r25
+ 28e:	88 0f       	add	r24, r24
+ 290:	99 1f       	adc	r25, r25
+ 292:	68 0f       	add	r22, r24
+ 294:	79 1f       	adc	r23, r25
+ 296:	67 2f       	mov	r22, r23
+ 298:	77 27       	eor	r23, r23
+ 29a:	80 e0       	ldi	r24, 0x00	; 0
+ 29c:	90 e0       	ldi	r25, 0x00	; 0
+ 29e:	28 d0       	rcall	.+80     	; 0x2f0 <__floatunsisf>
+ 2a0:	60 93 66 00 	sts	0x0066, r22	; 0x800066 <battVoltage>
+ 2a4:	70 93 67 00 	sts	0x0067, r23	; 0x800067 <battVoltage+0x1>
+ 2a8:	80 93 68 00 	sts	0x0068, r24	; 0x800068 <battVoltage+0x2>
+ 2ac:	90 93 69 00 	sts	0x0069, r25	; 0x800069 <battVoltage+0x3>
+		if (battVoltage < 3.5) //if user wants to shutdown completely (long button press?)
 		{
 			//shut down BATFET via i2c. Need to plug into power source to restore BATFET.
 		}
-		if( chargerError)
- 27a:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__data_start>
- 27e:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__data_start+0x1>
- 282:	89 2b       	or	r24, r25
- 284:	21 f0       	breq	.+8      	; 0x28e <main+0x18>
-		{	
-			TIMSK1 = 0b00000000; // stop timer
- 286:	1c b8       	out	0x0c, r1	; 12
-			FlashLEDs(1);
- 288:	81 e0       	ldi	r24, 0x01	; 1
- 28a:	90 e0       	ldi	r25, 0x00	; 0
- 28c:	5d df       	rcall	.-326    	; 0x148 <FlashLEDs>
-		}
 
-		if (buttonFlag == 1)
- 28e:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__data_end>
- 292:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <__data_end+0x1>
- 296:	01 97       	sbiw	r24, 0x01	; 1
- 298:	29 f4       	brne	.+10     	; 0x2a4 <main+0x2e>
+		if (buttonFlag)
+ 2b0:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <buttonFlag>
+ 2b4:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <buttonFlag+0x1>
+ 2b8:	89 2b       	or	r24, r25
+ 2ba:	29 f0       	breq	.+10     	; 0x2c6 <main+0x46>
 		{
 			ButtonAction();
- 29a:	df de       	rcall	.-578    	; 0x5a <ButtonAction>
+ 2bc:	c3 de       	rcall	.-634    	; 0x44 <ButtonAction>
 			buttonFlag = 0;
- 29c:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <__data_end+0x1>
- 2a0:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <__data_end>
+ 2be:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <buttonFlag+0x1>
+ 2c2:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <buttonFlag>
 		}
 
 		if (battCharging)
- 2a4:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <battCharging>
- 2a8:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <battCharging+0x1>
- 2ac:	89 2b       	or	r24, r25
- 2ae:	11 f0       	breq	.+4      	; 0x2b4 <main+0x3e>
+ 2c6:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <battCharging>
+ 2ca:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <battCharging+0x1>
+ 2ce:	89 2b       	or	r24, r25
+ 2d0:	11 f0       	breq	.+4      	; 0x2d6 <main+0x56>
 		{
-			TIMSK1 = 0b00000010;		//Generate timer interrupt on compare match of OCR1A(TCNT1)
- 2b0:	cc b9       	out	0x0c, r28	; 12
- 2b2:	e3 cf       	rjmp	.-58     	; 0x27a <main+0x4>
+			TIMSK1 = 0b00000010;	//Enable timer compare match that drives LED timing
+ 2d2:	cc b9       	out	0x0c, r28	; 12
+ 2d4:	d7 cf       	rjmp	.-82     	; 0x284 <main+0x4>
 		}
 		else
 		{
-			TIMSK1 = 0b00000000;		//Disable timer interrupt.
- 2b4:	1c b8       	out	0x0c, r1	; 12
- 2b6:	e1 cf       	rjmp	.-62     	; 0x27a <main+0x4>
+			TIMSK1 = 0b00000000;	//Disable timer compare match that drives LED timing
+ 2d6:	1c b8       	out	0x0c, r1	; 12
+ 2d8:	d5 cf       	rjmp	.-86     	; 0x284 <main+0x4>
 
-000002b8 <USI_TWI_Master_Initialise>:
+000002da <USI_TWI_Master_Initialise>:
 /*---------------------------------------------------------------
 USI TWI single master initialization function
 ---------------------------------------------------------------*/
 void USI_TWI_Master_Initialise( void )
 {
 	PORT_USI |= (1<<PIN_USI_SDA);           // Enable pullup on SDA, to set high as released state.
- 2b8:	c6 9a       	sbi	0x18, 6	; 24
+ 2da:	de 9a       	sbi	0x1b, 6	; 27
 	PORT_USI |= (1<<PIN_USI_SCL);           // Enable pullup on SCL, to set high as released state.
- 2ba:	c4 9a       	sbi	0x18, 4	; 24
+ 2dc:	dc 9a       	sbi	0x1b, 4	; 27
 	DDR_USI  |= (1<<PIN_USI_SCL);           // Enable SCL as output.
- 2bc:	d4 9a       	sbi	0x1a, 4	; 26
+ 2de:	d4 9a       	sbi	0x1a, 4	; 26
 	DDR_USI  |= (1<<PIN_USI_SDA);           // Enable SDA as output.
- 2be:	d6 9a       	sbi	0x1a, 6	; 26
+ 2e0:	d6 9a       	sbi	0x1a, 6	; 26
 	USIDR    =  0xFF;                       // Preload dataregister with "released level" data.
- 2c0:	8f ef       	ldi	r24, 0xFF	; 255
- 2c2:	8f b9       	out	0x0f, r24	; 15
+ 2e2:	8f ef       	ldi	r24, 0xFF	; 255
+ 2e4:	8f b9       	out	0x0f, r24	; 15
 	USICR    =  (0<<USISIE)|(0<<USIOIE)|                            // Disable Interrupts.
- 2c4:	8a e2       	ldi	r24, 0x2A	; 42
- 2c6:	8d b9       	out	0x0d, r24	; 13
+ 2e6:	8a e2       	ldi	r24, 0x2A	; 42
+ 2e8:	8d b9       	out	0x0d, r24	; 13
 	(1<<USIWM1)|(0<<USIWM0)|                            // Set USI in Two-wire mode.
 	(1<<USICS1)|(0<<USICS0)|(1<<USICLK)|                // Software stobe as counter clock source
 	(0<<USITC);
 	USISR   =   (1<<USISIF)|(1<<USIOIF)|(1<<USIPF)|(1<<USIDC)|      // Clear flags,
- 2c8:	80 ef       	ldi	r24, 0xF0	; 240
- 2ca:	8e b9       	out	0x0e, r24	; 14
- 2cc:	08 95       	ret
+ 2ea:	80 ef       	ldi	r24, 0xF0	; 240
+ 2ec:	8e b9       	out	0x0e, r24	; 14
+ 2ee:	08 95       	ret
 
-000002ce <__gesf2>:
- 2ce:	03 d0       	rcall	.+6      	; 0x2d6 <__fp_cmp>
- 2d0:	08 f4       	brcc	.+2      	; 0x2d4 <__gesf2+0x6>
- 2d2:	8f ef       	ldi	r24, 0xFF	; 255
- 2d4:	08 95       	ret
+000002f0 <__floatunsisf>:
+ 2f0:	e8 94       	clt
+ 2f2:	09 c0       	rjmp	.+18     	; 0x306 <__floatsisf+0x12>
 
-000002d6 <__fp_cmp>:
- 2d6:	99 0f       	add	r25, r25
- 2d8:	00 08       	sbc	r0, r0
- 2da:	55 0f       	add	r21, r21
- 2dc:	aa 0b       	sbc	r26, r26
- 2de:	e0 e8       	ldi	r30, 0x80	; 128
- 2e0:	fe ef       	ldi	r31, 0xFE	; 254
- 2e2:	16 16       	cp	r1, r22
- 2e4:	17 06       	cpc	r1, r23
- 2e6:	e8 07       	cpc	r30, r24
- 2e8:	f9 07       	cpc	r31, r25
- 2ea:	c0 f0       	brcs	.+48     	; 0x31c <__fp_cmp+0x46>
- 2ec:	12 16       	cp	r1, r18
- 2ee:	13 06       	cpc	r1, r19
- 2f0:	e4 07       	cpc	r30, r20
- 2f2:	f5 07       	cpc	r31, r21
- 2f4:	98 f0       	brcs	.+38     	; 0x31c <__fp_cmp+0x46>
- 2f6:	62 1b       	sub	r22, r18
- 2f8:	73 0b       	sbc	r23, r19
- 2fa:	84 0b       	sbc	r24, r20
- 2fc:	95 0b       	sbc	r25, r21
- 2fe:	39 f4       	brne	.+14     	; 0x30e <__fp_cmp+0x38>
- 300:	0a 26       	eor	r0, r26
- 302:	61 f0       	breq	.+24     	; 0x31c <__fp_cmp+0x46>
- 304:	23 2b       	or	r18, r19
- 306:	24 2b       	or	r18, r20
- 308:	25 2b       	or	r18, r21
- 30a:	21 f4       	brne	.+8      	; 0x314 <__fp_cmp+0x3e>
- 30c:	08 95       	ret
- 30e:	0a 26       	eor	r0, r26
- 310:	09 f4       	brne	.+2      	; 0x314 <__fp_cmp+0x3e>
- 312:	a1 40       	sbci	r26, 0x01	; 1
- 314:	a6 95       	lsr	r26
- 316:	8f ef       	ldi	r24, 0xFF	; 255
- 318:	81 1d       	adc	r24, r1
- 31a:	81 1d       	adc	r24, r1
- 31c:	08 95       	ret
+000002f4 <__floatsisf>:
+ 2f4:	97 fb       	bst	r25, 7
+ 2f6:	3e f4       	brtc	.+14     	; 0x306 <__floatsisf+0x12>
+ 2f8:	90 95       	com	r25
+ 2fa:	80 95       	com	r24
+ 2fc:	70 95       	com	r23
+ 2fe:	61 95       	neg	r22
+ 300:	7f 4f       	sbci	r23, 0xFF	; 255
+ 302:	8f 4f       	sbci	r24, 0xFF	; 255
+ 304:	9f 4f       	sbci	r25, 0xFF	; 255
+ 306:	99 23       	and	r25, r25
+ 308:	a9 f0       	breq	.+42     	; 0x334 <__floatsisf+0x40>
+ 30a:	f9 2f       	mov	r31, r25
+ 30c:	96 e9       	ldi	r25, 0x96	; 150
+ 30e:	bb 27       	eor	r27, r27
+ 310:	93 95       	inc	r25
+ 312:	f6 95       	lsr	r31
+ 314:	87 95       	ror	r24
+ 316:	77 95       	ror	r23
+ 318:	67 95       	ror	r22
+ 31a:	b7 95       	ror	r27
+ 31c:	f1 11       	cpse	r31, r1
+ 31e:	f8 cf       	rjmp	.-16     	; 0x310 <__floatsisf+0x1c>
+ 320:	fa f4       	brpl	.+62     	; 0x360 <__floatsisf+0x6c>
+ 322:	bb 0f       	add	r27, r27
+ 324:	11 f4       	brne	.+4      	; 0x32a <__floatsisf+0x36>
+ 326:	60 ff       	sbrs	r22, 0
+ 328:	1b c0       	rjmp	.+54     	; 0x360 <__floatsisf+0x6c>
+ 32a:	6f 5f       	subi	r22, 0xFF	; 255
+ 32c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 32e:	8f 4f       	sbci	r24, 0xFF	; 255
+ 330:	9f 4f       	sbci	r25, 0xFF	; 255
+ 332:	16 c0       	rjmp	.+44     	; 0x360 <__floatsisf+0x6c>
+ 334:	88 23       	and	r24, r24
+ 336:	11 f0       	breq	.+4      	; 0x33c <__floatsisf+0x48>
+ 338:	96 e9       	ldi	r25, 0x96	; 150
+ 33a:	11 c0       	rjmp	.+34     	; 0x35e <__floatsisf+0x6a>
+ 33c:	77 23       	and	r23, r23
+ 33e:	21 f0       	breq	.+8      	; 0x348 <__floatsisf+0x54>
+ 340:	9e e8       	ldi	r25, 0x8E	; 142
+ 342:	87 2f       	mov	r24, r23
+ 344:	76 2f       	mov	r23, r22
+ 346:	05 c0       	rjmp	.+10     	; 0x352 <__floatsisf+0x5e>
+ 348:	66 23       	and	r22, r22
+ 34a:	71 f0       	breq	.+28     	; 0x368 <__floatsisf+0x74>
+ 34c:	96 e8       	ldi	r25, 0x86	; 134
+ 34e:	86 2f       	mov	r24, r22
+ 350:	70 e0       	ldi	r23, 0x00	; 0
+ 352:	60 e0       	ldi	r22, 0x00	; 0
+ 354:	2a f0       	brmi	.+10     	; 0x360 <__floatsisf+0x6c>
+ 356:	9a 95       	dec	r25
+ 358:	66 0f       	add	r22, r22
+ 35a:	77 1f       	adc	r23, r23
+ 35c:	88 1f       	adc	r24, r24
+ 35e:	da f7       	brpl	.-10     	; 0x356 <__floatsisf+0x62>
+ 360:	88 0f       	add	r24, r24
+ 362:	96 95       	lsr	r25
+ 364:	87 95       	ror	r24
+ 366:	97 f9       	bld	r25, 7
+ 368:	08 95       	ret
 
-0000031e <_exit>:
- 31e:	f8 94       	cli
+0000036a <__gesf2>:
+ 36a:	03 d0       	rcall	.+6      	; 0x372 <__fp_cmp>
+ 36c:	08 f4       	brcc	.+2      	; 0x370 <__gesf2+0x6>
+ 36e:	8f ef       	ldi	r24, 0xFF	; 255
+ 370:	08 95       	ret
 
-00000320 <__stop_program>:
- 320:	ff cf       	rjmp	.-2      	; 0x320 <__stop_program>
+00000372 <__fp_cmp>:
+ 372:	99 0f       	add	r25, r25
+ 374:	00 08       	sbc	r0, r0
+ 376:	55 0f       	add	r21, r21
+ 378:	aa 0b       	sbc	r26, r26
+ 37a:	e0 e8       	ldi	r30, 0x80	; 128
+ 37c:	fe ef       	ldi	r31, 0xFE	; 254
+ 37e:	16 16       	cp	r1, r22
+ 380:	17 06       	cpc	r1, r23
+ 382:	e8 07       	cpc	r30, r24
+ 384:	f9 07       	cpc	r31, r25
+ 386:	c0 f0       	brcs	.+48     	; 0x3b8 <__fp_cmp+0x46>
+ 388:	12 16       	cp	r1, r18
+ 38a:	13 06       	cpc	r1, r19
+ 38c:	e4 07       	cpc	r30, r20
+ 38e:	f5 07       	cpc	r31, r21
+ 390:	98 f0       	brcs	.+38     	; 0x3b8 <__fp_cmp+0x46>
+ 392:	62 1b       	sub	r22, r18
+ 394:	73 0b       	sbc	r23, r19
+ 396:	84 0b       	sbc	r24, r20
+ 398:	95 0b       	sbc	r25, r21
+ 39a:	39 f4       	brne	.+14     	; 0x3aa <__fp_cmp+0x38>
+ 39c:	0a 26       	eor	r0, r26
+ 39e:	61 f0       	breq	.+24     	; 0x3b8 <__fp_cmp+0x46>
+ 3a0:	23 2b       	or	r18, r19
+ 3a2:	24 2b       	or	r18, r20
+ 3a4:	25 2b       	or	r18, r21
+ 3a6:	21 f4       	brne	.+8      	; 0x3b0 <__fp_cmp+0x3e>
+ 3a8:	08 95       	ret
+ 3aa:	0a 26       	eor	r0, r26
+ 3ac:	09 f4       	brne	.+2      	; 0x3b0 <__fp_cmp+0x3e>
+ 3ae:	a1 40       	sbci	r26, 0x01	; 1
+ 3b0:	a6 95       	lsr	r26
+ 3b2:	8f ef       	ldi	r24, 0xFF	; 255
+ 3b4:	81 1d       	adc	r24, r1
+ 3b6:	81 1d       	adc	r24, r1
+ 3b8:	08 95       	ret
+
+000003ba <_exit>:
+ 3ba:	f8 94       	cli
+
+000003bc <__stop_program>:
+ 3bc:	ff cf       	rjmp	.-2      	; 0x3bc <__stop_program>
