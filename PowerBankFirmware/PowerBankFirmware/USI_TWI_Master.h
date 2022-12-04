@@ -1,11 +1,11 @@
 /*****************************************************************************
 * File              USI_TWI_Master.h compiled with gcc
 * Date              Friday, 10/31/08		Boo!
-* Updated by        jkl
+* Updated by        BC for ATTiny44a
 *
 *
 * Supported devices : All device with USI module can be used.
-*                     The example is written for the ATtiny2313
+*                     The example is written for the ATtiny
 *
 * AppNote           : AVR310 - Using the USI module as a TWI Master
 *
@@ -52,7 +52,7 @@ Bit and byte definitions
 #define USI_TWI_MISSING_STOP_CON    0x04  // Generated Stop Condition not detected on bus
 #define USI_TWI_BAD_MEM_READ	    0x0A  // Error during external memory read
 
-// Device Dependant defines - These for ATtiny2313.
+// Device Dependant defines - These for ATtiny44a
 #define DDR_USI             DDRA
 #define PORT_USI            PORTA
 #define PIN_USI             PINA

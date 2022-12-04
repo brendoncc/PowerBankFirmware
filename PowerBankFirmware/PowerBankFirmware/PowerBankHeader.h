@@ -12,6 +12,7 @@
 #include <avr/interrupt.h> //interrupt header
 #include <avr/sleep.h>
 #include <util/delay.h> //delay header
+#include <math.h>
 
 /* 
 * Bit masking of IO
@@ -68,9 +69,9 @@
 
 /* Function Prototypes */
 void Setup(void);
-void ButtonAction(void);
-void ButtonShort(void);
-void ButtonLong(void);
-void FlashLEDs(int numFlashes);
+void ButtonActionShort(void);
+//void ReadADC(void);
+void BQShutdown(void);
+void BQRead(void);
 ISR (TIMER1_COMPA_vect);
 ISR (TIMER0_COMPA_vect);
