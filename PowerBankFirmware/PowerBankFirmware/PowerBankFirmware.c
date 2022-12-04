@@ -13,10 +13,10 @@
 int battCharging = 0;		//used to detect if battery is charging. Based on i2c from lipo charger.
 volatile int ledCount = 0;
 //float battVoltage = 0.0;	//calculated from analog.
-float battVoltageBQ = 0.0;
+float battVoltageBQ = 0.0;	//Read from I2C, BQ25895 has internal ADC
 float battCurrentBQ = 0.0;	//Read from I2C, BQ25895 has internal ADC
-unsigned char messageBuf[4];
-unsigned char slaveAdd = 0x6a;
+unsigned char messageBuf[4];	//buffer for I2C comms
+unsigned char slaveAdd = 0x6a;	//BQ25895 I2C slave address
 
 /* Overview
 
@@ -26,6 +26,12 @@ Button push will do 1 of 3 things
 - long press (10s): turn off BatFET, requires long press (2s) to turn back on
 
 If battery is charging, LED will show charging pattern. Pattern length is based on the battery voltage 
+
+If battery is not charging, uC sleeps automatically and wakes every 8s to poll BQ25895 for 3 variables: Battery charging status, battery voltage, and battery charge current. 
+
+If battery voltage is detected to drop below 3.5V, the unit will automatically disconnect the battery from the system.
+
+User can preserve battery life by shutting down the unit with a 10s button press. This will disconnect the battery from the system. To reconnect, button needs to be held for 2s. 
 
 */
 
@@ -67,7 +73,7 @@ int main(void)
 void BQShutdown(void) //quick flash of LEDs to show shutdown, then tell BQ to disconnect BATFET
 {
 	_delay_ms(100);
-	LED1_ON,LED2_ON, LED3_ON,LED4_ON;
+	LED1_ON,LED2_ON, LED3_ON,LED4_ON;	//flash all LEDs twice quickly to show shutdown
 	_delay_ms(100);
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 	_delay_ms(100);
@@ -88,7 +94,7 @@ void BQRead(void)
 	//read charging status
 	messageBuf[0] = (slaveAdd<<TWI_ADR_BITS) | (0<<TWI_READ_BIT); //first byte: first bit is R/W, upper 7 are address. Set to write since we are telling slave what register we want
 	messageBuf[1] = 0x0B;	//second byte: register address to read or write to
-	USI_TWI_Start_Random_Read(messageBuf,3);		
+	USI_TWI_Start_Random_Read(messageBuf,3);	//start I2C read, 3 bytes are 2 bytes to send + 1 byte to read		
 	battCharging = ((messageBuf[1]&(1<<4)) ^ (messageBuf[1]&(1<<3))); 
 	
 	_delay_ms(10);
@@ -104,19 +110,19 @@ void BQRead(void)
 	//read battery voltage after ADC conversion
 	messageBuf[0] = (slaveAdd<<TWI_ADR_BITS) | (0<<TWI_READ_BIT); //first byte: first bit is R/W, upper 7 are address. Set to write since we are telling slave what register we want
 	messageBuf[1] = 0x0E;	//second byte: register address to read or write to
-	USI_TWI_Start_Random_Read(messageBuf,3);
-	battVoltageBQ = ((((messageBuf[1]))*0.02)+2.304); //set bit 7 to 0 (not used in voltage calc), multiple by 0.02V (v per decimal), offset by 2.304V. 
+	USI_TWI_Start_Random_Read(messageBuf,3); //start I2C read, 3 bytes are 2 bytes to send + 1 byte to read
+	battVoltageBQ = ((((messageBuf[1]))*0.02)+2.304); //multiply by 0.02V (V per decimal), offset by 2.304V (register starts at 2.304V)
 	
 	_delay_ms(10);
 
 	//read battery current after ADC conversion
 	messageBuf[0] = (slaveAdd<<TWI_ADR_BITS) | (0<<TWI_READ_BIT); //first byte: first bit is R/W, upper 7 are address. Set to write since we are telling slave what register we want
 	messageBuf[1] = 0x12;	//second byte: register address to read or write to
-	USI_TWI_Start_Random_Read(messageBuf,3);
-	battCurrentBQ = (((messageBuf[1]))*0.05); // multiple by 0.05A per decimal 
+	USI_TWI_Start_Random_Read(messageBuf,3);	//start I2C read, 3 bytes are 2 bytes to send + 1 byte to read
+	battCurrentBQ = (((messageBuf[1]))*0.05); // multiply by 0.05A (A per decimal)
 }
 
-void ButtonActionShort(void) //Short button press shows voltage
+void ButtonActionShort(void) //Short button press shows battery voltage if not charging, shows battery charge current if charging
 {
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 
@@ -185,7 +191,7 @@ void ButtonActionShort(void) //Short button press shows voltage
 ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and call function
 {
 	int buttoncount = 0;
-	ledCount = 0; //reset LED count for charging pattern timer so it doesnt start halfway
+	ledCount = 0; //reset LED count for charging pattern timer so it doesnt start halfway when button is pushed during charging
 
 	while(BUTTON_PRESSED && buttoncount <= 1000)
 	{
@@ -207,7 +213,7 @@ ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and 
 
 ISR (WATCHDOG_vect)		//watchdog interrupt wakes uC every 8s to monitor
 {
-	WDTCSR = 0b01101001;
+	WDTCSR = 0b01101001;	//set watchdog back to interrupt instead of reset. If this doesnt happen, second watchdog time out results in reset. 
 }
 
 ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging and dynamically show voltage increasing.
@@ -261,7 +267,7 @@ void Setup(void)
 	WDTCSR = 0b01101001;	//watchdog enabled, set to interrupt not reset. 8s watchdog timing. If watchdog not reset after interrupt, next watchdog timeout will cause reset. 
 
 	_delay_ms(200);
-	LED1_ON,LED2_ON, LED3_ON,LED4_ON;
+	LED1_ON,LED2_ON, LED3_ON,LED4_ON;	//flash all LEDs twice to show power on (slower than shutdown LED flash so user can tell the difference)
 	_delay_ms(200);
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 	_delay_ms(200);
@@ -269,8 +275,8 @@ void Setup(void)
 	_delay_ms(200);
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 
-	sei();					//global interrupts enabled
+	sei();	//global interrupts enabled
 
-	USI_TWI_Master_Initialise();
+	USI_TWI_Master_Initialise();	//initalize I2C interface
 }
 
