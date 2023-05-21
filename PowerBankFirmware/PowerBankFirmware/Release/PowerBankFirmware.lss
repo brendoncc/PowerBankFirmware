@@ -306,9 +306,9 @@ Disassembly of section .text:
  232:	a9 d3       	rcall	.+1874   	; 0x986 <__gesf2>
  234:	87 ff       	sbrs	r24, 7
  236:	47 c0       	rjmp	.+142    	; 0x2c6 <ButtonActionShort+0x118>
- 238:	20 e0       	ldi	r18, 0x00	; 0
- 23a:	30 e0       	ldi	r19, 0x00	; 0
- 23c:	40 e6       	ldi	r20, 0x60	; 96
+ 238:	23 e3       	ldi	r18, 0x33	; 51
+ 23a:	33 e3       	ldi	r19, 0x33	; 51
+ 23c:	43 e5       	ldi	r20, 0x53	; 83
  23e:	50 e4       	ldi	r21, 0x40	; 64
  240:	49 c0       	rjmp	.+146    	; 0x2d4 <ButtonActionShort+0x126>
  242:	8f e4       	ldi	r24, 0x4F	; 79
@@ -442,8 +442,8 @@ Disassembly of section .text:
  34a:	86 bb       	out	0x16, r24	; 22
  34c:	81 11       	cpse	r24, r1
  34e:	0c c0       	rjmp	.+24     	; 0x368 <__vector_1+0x54>
- 350:	c9 3e       	cpi	r28, 0xE9	; 233
- 352:	93 e0       	ldi	r25, 0x03	; 3
+ 350:	c5 3f       	cpi	r28, 0xF5	; 245
+ 352:	91 e0       	ldi	r25, 0x01	; 1
  354:	d9 07       	cpc	r29, r25
  356:	41 f0       	breq	.+16     	; 0x368 <__vector_1+0x54>
  358:	21 96       	adiw	r28, 0x01	; 1
@@ -455,8 +455,8 @@ Disassembly of section .text:
  364:	00 00       	nop
  366:	ef cf       	rjmp	.-34     	; 0x346 <__vector_1+0x32>
  368:	ad de       	rcall	.-678    	; 0xc4 <BQRead>
- 36a:	c9 3e       	cpi	r28, 0xE9	; 233
- 36c:	d3 40       	sbci	r29, 0x03	; 3
+ 36a:	c5 3f       	cpi	r28, 0xF5	; 245
+ 36c:	d1 40       	sbci	r29, 0x01	; 1
  36e:	11 f4       	brne	.+4      	; 0x374 <__vector_1+0x60>
  370:	74 de       	rcall	.-792    	; 0x5a <BQShutdown>
  372:	01 c0       	rjmp	.+2      	; 0x376 <__vector_1+0x62>
@@ -519,9 +519,9 @@ Disassembly of section .text:
  3de:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <ledCount+0x1>
  3e2:	01 97       	sbiw	r24, 0x01	; 1
  3e4:	89 f4       	brne	.+34     	; 0x408 <__LOCK_REGION_LENGTH__+0x8>
- 3e6:	20 e0       	ldi	r18, 0x00	; 0
- 3e8:	30 e0       	ldi	r19, 0x00	; 0
- 3ea:	40 e6       	ldi	r20, 0x60	; 96
+ 3e6:	23 e3       	ldi	r18, 0x33	; 51
+ 3e8:	33 e3       	ldi	r19, 0x33	; 51
+ 3ea:	43 e5       	ldi	r20, 0x53	; 83
  3ec:	50 e4       	ldi	r21, 0x40	; 64
  3ee:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <battVoltageBQ>
  3f2:	70 91 67 00 	lds	r23, 0x0067	; 0x800067 <battVoltageBQ+0x1>
@@ -692,9 +692,9 @@ Disassembly of section .text:
  56e:	aa dd       	rcall	.-1196   	; 0xc4 <BQRead>
  570:	c2 e0       	ldi	r28, 0x02	; 2
  572:	a8 dd       	rcall	.-1200   	; 0xc4 <BQRead>
- 574:	20 e0       	ldi	r18, 0x00	; 0
- 576:	30 e0       	ldi	r19, 0x00	; 0
- 578:	40 e6       	ldi	r20, 0x60	; 96
+ 574:	23 e3       	ldi	r18, 0x33	; 51
+ 576:	33 e3       	ldi	r19, 0x33	; 51
+ 578:	43 e5       	ldi	r20, 0x53	; 83
  57a:	50 e4       	ldi	r21, 0x40	; 64
  57c:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <battVoltageBQ>
  580:	70 91 67 00 	lds	r23, 0x0067	; 0x800067 <battVoltageBQ+0x1>

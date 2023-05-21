@@ -23,15 +23,15 @@ unsigned char slaveAdd = 0x6a;	//BQ25895 I2C slave address
 Button push will do 1 of 3 things
 - short press: show battery voltage
 - short press while battery charging: show battery charging current
-- long press (10s): turn off BatFET, requires long press (2s) to turn back on
+- long press (5s): turn off BatFET, requires long press (2s) to turn back on
 
 If battery is charging, LED will show charging pattern. Pattern length is based on the battery voltage 
 
 If battery is not charging, uC sleeps automatically and wakes every 8s to poll BQ25895 for 3 variables: Battery charging status, battery voltage, and battery charge current. 
 
-If battery voltage is detected to drop below 3.5V, the unit will automatically disconnect the battery from the system.
+If battery voltage is detected to drop below 3.3V, the unit will automatically disconnect the battery from the system.
 
-User can preserve battery life by shutting down the unit with a 10s button press. This will disconnect the battery from the system. To reconnect, button needs to be held for 2s. 
+User can preserve battery life by shutting down the unit with a 5s button press. This will disconnect the battery from the system. To reconnect, button needs to be held for 2s. 
 
 */
 
@@ -43,10 +43,12 @@ int main(void)
 
 	while(1)
 	{
+		//Check if BQ25895 will automatically update input current when unrecognized supply. 
+		//If not, check if charging supply is unrecognized, if so, every 30s, re run the detection algorithm 
 		//ReadADC();
 		BQRead();
 
-		if (battVoltageBQ < 3.5) //UVLO threshold
+		if (battVoltageBQ < 3.3) //UVLO threshold
 		{
 			BQShutdown();
 		}
@@ -146,9 +148,9 @@ void ButtonActionShort(void) //Short button press shows battery voltage if not c
 		{
 			LED1_ON, LED2_ON; //2 LEDS on between 3.6V and 3.8V
 		}
-		else if (battVoltageBQ >= 3.5)
+		else if (battVoltageBQ >= 3.3)
 		{
-			LED1_ON; //1 LED on between 3.5V and 3.6V (shuts down below 3.5V)
+			LED1_ON; //1 LED on between 3.3V and 3.6V (shuts down below 3.3V)
 		}
 		else
 		{
@@ -193,7 +195,7 @@ ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and 
 	int buttoncount = 0;
 	ledCount = 0; //reset LED count for charging pattern timer so it doesnt start halfway when button is pushed during charging
 
-	while(BUTTON_PRESSED && buttoncount <= 1000)
+	while(BUTTON_PRESSED && buttoncount <= 500)
 	{
 		buttoncount++;
 		_delay_ms(10);
@@ -201,7 +203,7 @@ ISR (EXT_INT0_vect)		//Interrupt based on user button push. Used to wake uC and 
 	
 	BQRead();	
 
-	if (buttoncount > 1000)
+	if (buttoncount > 500)
 	{
 		BQShutdown();
 	}
@@ -218,19 +220,20 @@ ISR (WATCHDOG_vect)		//watchdog interrupt wakes uC every 8s to monitor
 
 ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging and dynamically show voltage increasing.
 {
-		if (ledCount == 1 && battVoltageBQ >= 3.5)
+		//Need to characterize battery pack and correspond accurate voltages to percentages
+		if (ledCount == 1 && battVoltageBQ >= 3.3) //0 - 25% capacity
 		{
 			LED1_ON;
 		}
-		else if (ledCount == 2 && battVoltageBQ >= 3.60)
+		else if (ledCount == 2 && battVoltageBQ >= 3.60) //25 - 50% capacity
 		{
 			LED2_ON;
 		}
-		else if (ledCount == 3 && battVoltageBQ >= 3.80)
+		else if (ledCount == 3 && battVoltageBQ >= 3.80) //50 - 75% capacity
 		{
 			LED3_ON;
 		}
-		else if (ledCount == 4 && battVoltageBQ >= 4.00)
+		else if (ledCount == 4 && battVoltageBQ >= 4.00) // 75 - 100% capacity 
 		{
 			LED4_ON;
 		}
