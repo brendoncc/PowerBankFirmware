@@ -29,7 +29,7 @@ If battery is charging, LED will show charging pattern. Pattern length is based 
 
 If battery is not charging, uC sleeps automatically and wakes every 8s to poll BQ25895 for 3 variables: Battery charging status, battery voltage, and battery charge current. 
 
-If battery voltage is detected to drop below 3.3V, the unit will automatically disconnect the battery from the system.
+If battery voltage is detected to drop below 3.2V (~100mV drop at 2A load means this is 3.3 - 3.4 V at the cell), the unit will automatically disconnect the battery from the system.
 
 User can preserve battery life by shutting down the unit with a 5s button press. This will disconnect the battery from the system. To reconnect, button needs to be held for 2s. 
 
@@ -48,14 +48,26 @@ int main(void)
 		//ReadADC();
 		BQRead();
 
-		if (battVoltageBQ < 3.3) //UVLO threshold
+		if (battVoltageBQ < 3.2) //UVLO threshold
 		{
 			BQShutdown();
 		}
 
+		//add if statement for fault here - blink lights rapidly for fault. To read the current fault status, the host has to read REG0C two times consecutively.
+ 
 		if (battCharging)
 		{
-			TIMSK1 = 0b00000010;	//Enable timer compare match that drives LED timing
+			if(battCharging == 0x03)
+			{
+				TIMSK1 = 0b00000000;	//Disable timer compare match that drives LED timing
+				LED1_ON,LED2_ON, LED3_ON,LED4_ON; //all LEDs on to show battery fully charged
+			}
+			else
+			{
+				TIMSK1 = 0b00000010;	//Enable timer compare match that drives LED timing
+				//add code here to check if unknown adapter type - if unknown adapter, re run the current optimizer every minute or so to try get MPP out of solar input.
+			}
+
 		}
 		else
 		{
@@ -128,7 +140,7 @@ void ButtonActionShort(void) //Short button press shows battery voltage if not c
 {
 	LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 
-	if (!battCharging)
+	if (battCharging == 0x00 || battCharging == 0x03)
 	{
 		_delay_ms(200);
 		LED1_ON;
@@ -148,15 +160,15 @@ void ButtonActionShort(void) //Short button press shows battery voltage if not c
 		{
 			LED1_ON, LED2_ON; //2 LEDS on between 3.6V and 3.8V
 		}
-		else if (battVoltageBQ >= 3.3)
+		else if (battVoltageBQ >= 3.2)
 		{
-			LED1_ON; //1 LED on between 3.3V and 3.6V (shuts down below 3.3V)
+			LED1_ON; //1 LED on between 3.2V and 3.6V (shuts down below 3.2V)
 		}
 		else
 		{
 		}
 	}
-	else if (battCharging)
+	else if (battCharging == 0x01 || battCharging == 0x02)
 	{
 		_delay_ms(200);
 		LED1_ON,LED2_ON;
@@ -221,7 +233,7 @@ ISR (WATCHDOG_vect)		//watchdog interrupt wakes uC every 8s to monitor
 ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging and dynamically show voltage increasing.
 {
 		//Need to characterize battery pack and correspond accurate voltages to percentages
-		if (ledCount == 1 && battVoltageBQ >= 3.3) //0 - 25% capacity
+		if (ledCount == 1 && battVoltageBQ >= 3.2) //0 - 25% capacity
 		{
 			LED1_ON;
 		}
