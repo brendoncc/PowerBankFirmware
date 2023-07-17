@@ -109,7 +109,7 @@ void BQRead(void)
 	messageBuf[0] = (slaveAdd<<TWI_ADR_BITS) | (0<<TWI_READ_BIT); //first byte: first bit is R/W, upper 7 are address. Set to write since we are telling slave what register we want
 	messageBuf[1] = 0x0B;	//second byte: register address to read or write to
 	USI_TWI_Start_Random_Read(messageBuf,3);	//start I2C read, 3 bytes are 2 bytes to send + 1 byte to read		
-	battCharging = ((messageBuf[1]&(1<<4)) ^ (messageBuf[1]&(1<<3))); 
+	battCharging = ((messageBuf[1]&(3<<3))>>3); 
 	
 	_delay_ms(10);
 	
