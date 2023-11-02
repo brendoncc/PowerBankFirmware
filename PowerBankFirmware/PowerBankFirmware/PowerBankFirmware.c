@@ -17,6 +17,7 @@ float battVoltageBQ = 0.0;	//Read from I2C, BQ25895 has internal ADC
 float battCurrentBQ = 0.0;	//Read from I2C, BQ25895 has internal ADC
 unsigned char messageBuf[4];	//buffer for I2C comms
 unsigned char slaveAdd = 0x6a;	//BQ25895 I2C slave address
+float uvlo_voltage = 3.0;
 
 /* Overview
 
@@ -29,7 +30,7 @@ If battery is charging, LED will show charging pattern. Pattern length is based 
 
 If battery is not charging, uC sleeps automatically and wakes every 8s to poll BQ25895 for 3 variables: Battery charging status, battery voltage, and battery charge current. 
 
-If battery voltage is detected to drop below 3.2V (~100mV drop at 2A load means this is 3.3 - 3.4 V at the cell), the unit will automatically disconnect the battery from the system.
+If battery voltage is detected to drop below 3.0V, the unit will automatically disconnect the battery from the system.
 
 User can preserve battery life by shutting down the unit with a 5s button press. This will disconnect the battery from the system. To reconnect, button needs to be held for 2s. 
 
@@ -48,7 +49,7 @@ int main(void)
 		//ReadADC();
 		BQRead();
 
-		if (battVoltageBQ < 3.2) //UVLO threshold
+		if (battVoltageBQ < uvlo_voltage) //UVLO threshold
 		{
 			BQShutdown();
 		}
@@ -75,6 +76,7 @@ int main(void)
 			ledCount = 0;
 			LED1_OFF, LED2_OFF, LED3_OFF, LED4_OFF;
 			sleep_cpu(); //sleep CPU, only way to wake is INT0 or watchdog. 
+
 		}
 	}
 }
@@ -156,13 +158,13 @@ void ButtonActionShort(void) //Short button press shows battery voltage if not c
 		{
 			LED1_ON, LED2_ON, LED3_ON; //3 LEDS on between 3.8V and 4V
 		}
-		else if (battVoltageBQ >= 3.60)
+		else if (battVoltageBQ >= 3.40)
 		{
-			LED1_ON, LED2_ON; //2 LEDS on between 3.6V and 3.8V
+			LED1_ON, LED2_ON; //2 LEDS on between 3.4V and 3.8V
 		}
-		else if (battVoltageBQ >= 3.2)
+		else if (battVoltageBQ >= uvlo_voltage)
 		{
-			LED1_ON; //1 LED on between 3.2V and 3.6V (shuts down below 3.2V)
+			LED1_ON; //1 LED on between 3.0V and 3.4V (shuts down below 3.0V)
 		}
 		else
 		{
@@ -233,11 +235,11 @@ ISR (WATCHDOG_vect)		//watchdog interrupt wakes uC every 8s to monitor
 ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging and dynamically show voltage increasing.
 {
 		//Need to characterize battery pack and correspond accurate voltages to percentages
-		if (ledCount == 1 && battVoltageBQ >= 3.2) //0 - 25% capacity
+		if (ledCount == 1 && battVoltageBQ >= uvlo_voltage) //0 - 25% capacity
 		{
 			LED1_ON;
 		}
-		else if (ledCount == 2 && battVoltageBQ >= 3.60) //25 - 50% capacity
+		else if (ledCount == 2 && battVoltageBQ >= 3.40) //25 - 50% capacity
 		{
 			LED2_ON;
 		}
