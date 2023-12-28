@@ -154,13 +154,13 @@ void ButtonActionShort(void) //Short button press shows battery voltage if not c
 		{
 			LED1_ON, LED2_ON, LED3_ON, LED4_ON; //4 LEDS on above 4V
 		}
-		else if (battVoltageBQ >= 3.80) 
+		else if (battVoltageBQ >= 3.65) 
 		{
-			LED1_ON, LED2_ON, LED3_ON; //3 LEDS on between 3.8V and 4V
+			LED1_ON, LED2_ON, LED3_ON; //3 LEDS on between 3.65V and 4V
 		}
 		else if (battVoltageBQ >= 3.40)
 		{
-			LED1_ON, LED2_ON; //2 LEDS on between 3.4V and 3.8V
+			LED1_ON, LED2_ON; //2 LEDS on between 3.4V and 3.65V
 		}
 		else if (battVoltageBQ >= uvlo_voltage)
 		{
@@ -243,7 +243,7 @@ ISR (TIM1_COMPA_vect)	//LED sequence to indicate battery charging and dynamicall
 		{
 			LED2_ON;
 		}
-		else if (ledCount == 3 && battVoltageBQ >= 3.80) //50 - 75% capacity
+		else if (ledCount == 3 && battVoltageBQ >= 3.65) //50 - 75% capacity
 		{
 			LED3_ON;
 		}
