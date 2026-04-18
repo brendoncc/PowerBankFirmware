@@ -1,2 +1,2 @@
 # PowerBankFirmware
-Firmware for the power bank project using AT Tiny and i2c comms to the bq25895
+Firmware for the a custom power bank using ATtiny44A and BQ25895
