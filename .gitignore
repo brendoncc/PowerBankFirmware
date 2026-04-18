@@ -1,3 +1,66 @@
+# ==========================================
+# Atmel Studio / Microchip Studio .gitignore
+# ==========================================
 
-PowerBankFirmware/.vs/PowerBankFirmware/v14/.atsuo
-PowerBankFirmware/.vs/PowerBankFirmware/v14/.atsuo
+# Build directories
+[Dd]ebug/
+[Rr]elease/
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.su
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables and binaries
+*.exe
+*.out
+*.app
+*.elf
+*.hex
+*.bin
+*.eep
+*.srec
+
+# Debug, listing, and map files
+*.map
+*.lss
+*.sym
+*.dbg
+*.d
+
+# Atmel Studio specific user and cache files
+*.user
+*.atsuo
+*.suo
+*.dbmdl
+*.cache
+*.pidb
+*.componentinfo.xml
+
+# Visual Studio directory (Atmel Studio is based on the VS shell)
+.vs/
+*.rsuser
+*.vssscc
+*.vspscc
+
+# OS generated files (Optional but recommended)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
